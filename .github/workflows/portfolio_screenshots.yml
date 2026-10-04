@@ -1,0 +1,60 @@
+name: Portfolio screenshots
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - docs/REFRESH_PORTFOLIO_SCREENSHOTS
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Prepare visual QA fonts
+        run: |
+          curl -fL --retry 3             -o /tmp/Inter.ttf             'https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf'
+          MATERIAL_ICONS_PATH="$(find "$FLUTTER_ROOT" -name MaterialIcons-Regular.otf | head -n 1)"
+          test -n "$MATERIAL_ICONS_PATH"
+          echo "VISUAL_QA_MATERIAL_ICONS_PATH=$MATERIAL_ICONS_PATH" >> "$GITHUB_ENV"
+
+      - name: Capture runtime screens
+        env:
+          VISUAL_QA_FONT_PATH: /tmp/Inter.ttf
+        run: flutter test tool/visual_qa_test.dart --reporter expanded
+
+      - name: Stage portfolio screenshots
+        run: |
+          mkdir -p screenshots
+          cp build/visual_qa/runtime/02_3-1853.png screenshots/01_onboarding.png
+          cp build/visual_qa/runtime/05_3-1932.png screenshots/02_sign_up.png
+          cp build/visual_qa/runtime/22_3-2922.png screenshots/03_home.png
+          cp build/visual_qa/runtime/31_3-3935.png screenshots/04_transactions.png
+          cp build/visual_qa/runtime/42_3-5291.png screenshots/05_budget.png
+          cp build/visual_qa/runtime/48_3-6026.png screenshots/06_insights.png
+
+      - name: Commit screenshots when changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add screenshots
+          if git diff --cached --quiet; then
+            echo "Portfolio screenshots are already current."
+          else
+            git commit -m "docs: refresh portfolio screenshots [skip ci]"
+            git push
+          fi
