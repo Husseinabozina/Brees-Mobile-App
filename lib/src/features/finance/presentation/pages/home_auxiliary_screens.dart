@@ -254,11 +254,11 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final yesterday = const [
+    const yesterday = [
       _NotificationItem('Shopping budget has exceeds..', 'Your Utilities budget has exceeds....', '3:40 PM', Color(0xFFFFAD5B), Icons.event_note_rounded),
       _NotificationItem('Use TPLACE Promo Code', 'Use Promo Code for The’Place', 'Promo', Color(0xFF137646), Icons.local_offer_rounded),
-      _NotificationItem('GetBrees Flex Friday Deal', '10:39 AM', 'Promo', Color(0xFFFFD4AA), Icons.local_offer_outlined),
-      _NotificationItem('N250 added successfully to bud..', '6: 14 PM', 'Info', Color(0xFF096D47), Icons.credit_card_rounded),
+      _NotificationItem('GetBrees Flex Friday Deal', 'A special deal is waiting for you', 'Promo', Color(0xFFFFD4AA), Icons.local_offer_outlined),
+      _NotificationItem('N250 added successfully to bud..', 'Your budget was updated', '6:14 PM', Color(0xFF096D47), Icons.credit_card_rounded),
     ];
 
     return DesignCanvas(
@@ -299,37 +299,7 @@ class NotificationScreen extends StatelessWidget {
                   children: [
                     const Text('Today', style: TextStyle(color: Color(0xFF8F92A1), fontSize: 14)),
                     const SizedBox(height: 16),
-                    Container(
-                      height: 96,
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF5F3FC),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 24,
-                            backgroundColor: BreesColors.primary,
-                            child: Icon(Icons.discount_outlined, color: Colors.white),
-                          ),
-                          SizedBox(width: 13),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('Cashback 50%', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-                                SizedBox(height: 4),
-                                Text('Get 50% cashback for Pizza Hut', style: TextStyle(color: Color(0xFF8F92A1), fontSize: 12)),
-                                SizedBox(height: 6),
-                                Text('Claim it now  ›', style: TextStyle(color: BreesColors.primary, fontSize: 14, fontWeight: FontWeight.w500)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    const _CashbackCard(),
                     const SizedBox(height: 26),
                     const Text('Yesterday', style: TextStyle(color: Color(0xFF8F92A1), fontSize: 14)),
                     const SizedBox(height: 10),
@@ -344,6 +314,37 @@ class NotificationScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _CashbackCard extends StatelessWidget {
+  const _CashbackCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 96,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF5F3FC),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: const Stack(
+        children: [
+          Positioned(
+            left: 15,
+            top: 24,
+            child: CircleAvatar(
+              radius: 24,
+              backgroundColor: BreesColors.primary,
+              child: Icon(Icons.discount_outlined, color: Colors.white),
+            ),
+          ),
+          Positioned(left: 76, top: 17, right: 12, child: Text('Cashback 50%', maxLines: 1, style: TextStyle(fontSize: 14, height: 18 / 14, fontWeight: FontWeight.w600))),
+          Positioned(left: 76, top: 41, right: 12, child: Text('Get 50% cashback for Pizza Hut', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: Color(0xFF8F92A1), fontSize: 12, height: 16 / 12))),
+          Positioned(left: 76, top: 65, child: Text('Claim it now  ›', style: TextStyle(color: BreesColors.primary, fontSize: 14, height: 18 / 14, fontWeight: FontWeight.w500))),
+        ],
       ),
     );
   }
@@ -366,28 +367,52 @@ class _NotificationRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 72,
-      child: Row(
+      child: Stack(
         children: [
-          Container(
+          Positioned(
+            left: 0,
+            top: 12,
             width: 48,
             height: 48,
-            decoration: BoxDecoration(color: item.color, borderRadius: BorderRadius.circular(10)),
-            child: Icon(item.icon, color: Colors.white, size: 23),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(item.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                const SizedBox(height: 5),
-                Text(item.subtitle, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 12)),
-              ],
+            child: Container(
+              decoration: BoxDecoration(color: item.color, borderRadius: BorderRadius.circular(10)),
+              child: Icon(item.icon, color: Colors.white, size: 23),
             ),
           ),
-          const SizedBox(width: 8),
-          Text(item.trailing, style: TextStyle(color: item.trailing.contains(':') ? const Color(0xFF8F92A1) : const Color(0xFF19B65B), fontSize: 12)),
+          Positioned(
+            left: 60,
+            right: 68,
+            top: 15,
+            child: Text(
+              item.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 14, height: 18 / 14, fontWeight: FontWeight.w500),
+            ),
+          ),
+          Positioned(
+            left: 60,
+            right: 68,
+            top: 40,
+            child: Text(
+              item.subtitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 12, height: 16 / 12),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            top: 29,
+            child: Text(
+              item.trailing,
+              style: TextStyle(
+                color: item.trailing.contains(':') ? const Color(0xFF8F92A1) : const Color(0xFF19B65B),
+                fontSize: 12,
+                height: 16 / 12,
+              ),
+            ),
+          ),
         ],
       ),
     );
