@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../auth/data/repositories/demo_auth_repository.dart';
+import '../../../../app/dependencies/brees_dependencies.dart';
 import '../../../auth/domain/usecases/register_user.dart';
 import '../../../auth/presentation/controllers/sign_up_controller.dart';
 import '../../../auth/presentation/pages/browser_account_screen.dart';
@@ -9,7 +9,6 @@ import '../../../auth/presentation/pages/forgot_password_screen.dart';
 import '../../../auth/presentation/pages/login_screen.dart';
 import '../../../auth/presentation/pages/sign_up_screen.dart';
 import '../../../auth/presentation/pages/sign_up_success_screen.dart';
-import '../../../finance/data/repositories/demo_finance_repository.dart';
 import '../../../finance/domain/usecases/load_finance_snapshot.dart';
 import '../../../finance/presentation/controllers/finance_controller.dart';
 import '../../../finance/presentation/pages/account_detail_screen.dart';
@@ -91,9 +90,14 @@ enum BreesStep {
 }
 
 class BreesFlow extends StatefulWidget {
-  const BreesFlow({super.key, this.initialStep = BreesStep.launch});
+  const BreesFlow({
+    super.key,
+    this.initialStep = BreesStep.launch,
+    this.dependencies,
+  });
 
   final BreesStep initialStep;
+  final BreesDependencies? dependencies;
 
   @override
   State<BreesFlow> createState() => _BreesFlowState();
@@ -102,6 +106,7 @@ class BreesFlow extends StatefulWidget {
 class _BreesFlowState extends State<BreesFlow> {
   late BreesStep _step;
   final List<BreesStep> _history = [];
+  late final BreesDependencies _dependencies;
   late final SignUpController _signUpController;
   late final FinanceController _financeController;
 
@@ -109,11 +114,12 @@ class _BreesFlowState extends State<BreesFlow> {
   void initState() {
     super.initState();
     _step = widget.initialStep;
+    _dependencies = widget.dependencies ?? BreesDependencies.mock();
     _signUpController = SignUpController(
-      RegisterUser(DemoAuthRepository()),
+      RegisterUser(_dependencies.authRepository),
     );
     _financeController = FinanceController(
-      LoadFinanceSnapshot(DemoFinanceRepository()),
+      LoadFinanceSnapshot(_dependencies.financeRepository),
     )..ensureLoaded();
   }
 
