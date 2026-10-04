@@ -1,22 +1,22 @@
 <div align="center">
-  <img src="docs/assets/app-icon.png" alt="Brees app icon" width="92" />
+  <img src="docs/assets/brees-mark.svg" alt="Brees app icon" width="104" />
   <h1>Brees</h1>
-  <p><strong>A polished Flutter personal-finance experience rebuilt from the Brees Figma Community UI kit.</strong></p>
-  <p>60 designed states · Clean Architecture · Motion · Automated visual QA · CI</p>
+  <p><strong>A polished Flutter personal-finance experience built from a complete Figma product flow.</strong></p>
+  <p>60 visual states · Clean Architecture · Motion · Automated visual QA · CI</p>
 
   <p>
     <a href="https://husseinabozina.github.io/Brees-Mobile-App/">
-      <img src="https://img.shields.io/badge/Open_Live_Portfolio-2C14DD?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Open live portfolio" />
+      <img src="https://img.shields.io/badge/OPEN_LIVE_PORTFOLIO-2C14DD?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Open live portfolio" />
     </a>
-    <a href="https://github.com/Husseinabozina/Brees-Mobile-App/releases">
-      <img src="https://img.shields.io/badge/Download_Android-131313?style=for-the-badge&logo=android&logoColor=white" alt="Download Android build" />
+    <a href="https://husseinabozina.github.io/Brees-Mobile-App/downloads/brees-demo.apk">
+      <img src="https://img.shields.io/badge/DOWNLOAD_ANDROID_APK-131313?style=for-the-badge&logo=android&logoColor=white" alt="Download Android APK" />
     </a>
   </p>
 
   <p>
     <img src="https://img.shields.io/badge/Flutter-Mobile-02569B?logo=flutter&logoColor=white" alt="Flutter" />
     <img src="https://img.shields.io/badge/Dart-Language-0175C2?logo=dart&logoColor=white" alt="Dart" />
-    <img src="https://img.shields.io/badge/Architecture-Clean-240F51" alt="Clean Architecture" />
+    <img src="https://img.shields.io/badge/Clean-Architecture-240F51" alt="Clean Architecture" />
     <img src="https://img.shields.io/badge/Visual_states-60-4C36ED" alt="60 visual states" />
     <a href="https://github.com/Husseinabozina/Brees-Mobile-App/actions/workflows/flutter_ci.yml">
       <img src="https://github.com/Husseinabozina/Brees-Mobile-App/actions/workflows/flutter_ci.yml/badge.svg" alt="Flutter CI" />
@@ -28,71 +28,63 @@
   <img src="docs/assets/readme-cover.svg" alt="Brees portfolio preview" width="100%" />
 </a>
 
-> **Design attribution:** the visual direction comes from the public **Brees Fintech App UI Kit** on Figma Community. This repository is an independent Flutter implementation focused on engineering quality, interaction, motion, testing, and faithful product presentation.
+## ✨ Product experience
 
-## The project
+Brees is a complete Flutter implementation of a personal-finance product journey rather than a collection of isolated screens. The app connects onboarding, authentication, account setup, dashboard states, accounts, transactions, budgets, insights, profile, settings, and support into one navigable experience.
 
-Brees is a portfolio-grade Flutter implementation of a complete personal-finance product journey — not a stack of static screenshots. The app covers onboarding, authentication, account setup, dashboards, accounts, transactions, budgets, insights, profile, settings, support, and system states.
+<table>
+  <tr>
+    <td align="center"><img src="screenshots/onboarding.png" width="220" alt="Brees onboarding"/><br/><sub><strong>Onboarding</strong></sub></td>
+    <td align="center"><img src="screenshots/sign_up.png" width="220" alt="Brees sign up"/><br/><sub><strong>Authentication</strong></sub></td>
+    <td align="center"><img src="screenshots/home_dashboard.png" width="220" alt="Brees dashboard"/><br/><sub><strong>Finance dashboard</strong></sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="screenshots/account_details.png" width="220" alt="Brees account details"/><br/><sub><strong>Account details</strong></sub></td>
+    <td align="center"><img src="screenshots/budgets.png" width="220" alt="Brees budgets"/><br/><sub><strong>Budgets</strong></sub></td>
+    <td align="center"><img src="screenshots/insights.png" width="220" alt="Brees insights"/><br/><sub><strong>Insights</strong></sub></td>
+  </tr>
+</table>
 
-The implementation is intentionally structured so the UI stays independent from infrastructure choices. Business logic is separated through domain contracts, use cases, repositories, data sources, and an API client boundary.
+> The screenshots above are captured from the running Flutter implementation and refreshed by CI.
 
-## Product highlights
+## 🚀 What the app covers
 
-| Experience | Included |
+| Area | Experience |
 | --- | --- |
-| Onboarding & auth | Launch, onboarding, guided setup, sign up, login, password recovery |
-| Finance overview | Balance dashboard, accounts, recent activity, loading and search states |
-| Transactions | History, details, sorting, categorisation and advanced filters |
-| Budgets | Empty state, setup flow, amount configuration, preview, success and active budgets |
-| Insights | Insight feed and multi-screen financial report story |
+| Launch & onboarding | Launch animation, three onboarding screens and guided setup |
+| Authentication | Sign up, login, password recovery and verification states |
+| Finance home | Balance overview, accounts, recent activity, search and loading states |
+| Transactions | History, details, sorting, category actions and advanced filtering |
+| Budgets | Empty state, onboarding, configuration, preview, success and active budgets |
+| Insights | Financial insight feed and multi-screen report story |
 | Profile & support | Profile editing, settings, password, notifications and help centre |
 
-## Selected screens
+## 🧱 Engineering
 
-<p align="center">
-  <img src="screenshots/onboarding.png" width="30%" alt="Brees onboarding screen" />
-  <img src="screenshots/home_dashboard.png" width="30%" alt="Brees finance dashboard" />
-  <img src="screenshots/account_details.png" width="30%" alt="Brees account details screen" />
-</p>
+The project keeps product UI independent from infrastructure choices through clear feature and domain boundaries.
 
-<p align="center">
-  <img src="screenshots/sign_up.png" width="30%" alt="Brees sign-up screen" />
-  <img src="screenshots/budgets.png" width="30%" alt="Brees budgets screen" />
-  <img src="screenshots/insights.png" width="30%" alt="Brees insights screen" />
-</p>
-
-These are **real Flutter runtime captures** generated by the project’s visual-QA workflow.
-
-## Engineering
-
-The app uses a pragmatic Clean Architecture boundary around business and data features.
-
-<pre>
+```text
 Presentation
-    ↓
+   ↓
 Controllers
-    ↓
+   ↓
 Use cases
-    ↓
+   ↓
 Repository contracts
-    ↓
+   ↓
 Repository implementations
-    ↓
+   ↓
 Remote data sources
-    ↓
-ApiClient / runtime transport
-</pre>
+   ↓
+ApiClient / transport
+```
 
-This keeps product screens and presentation logic independent from the transport used behind the data layer.
-
-### Structure
-
-<pre>
+```text
 lib/src/
 ├── app/
-│   └── dependencies/        composition root
+│   └── dependencies/
 ├── core/
-│   ├── network/             API abstraction and transport
+│   ├── network/
 │   ├── theme/
 │   └── widgets/
 └── features/
@@ -100,41 +92,61 @@ lib/src/
     ├── finance/
     ├── onboarding/
     └── system_preview/
-</pre>
+```
 
-## Motion & interaction
+### Motion & interaction
 
-The implementation includes purposeful product motion rather than static screen recreation: launch entrance, onboarding transitions, animated indicators, guide-card reveals, verification states, password interactions, dashboard transitions, transaction actions, budget state changes, insight stories, and loading animations.
+The implementation includes launch motion, onboarding transitions, animated indicators, verification states, password interactions, dashboard transitions, transaction actions, budget state changes, insight-story transitions, and loading animations.
 
-## Quality engineering
+## ✅ Quality
 
-GitHub Actions runs analysis, automated tests, and the 60-state visual-QA suite. The visual harness renders the Flutter implementation at the design viewport, captures runtime output, compares it with stored Figma references, and uploads diagnostics for regression review.
+Every pull request runs:
 
-The comparison score is treated as a **QA signal**, not as a claim of perfect pixel equivalence.
+```bash
+flutter analyze
+flutter test
+flutter test tool/visual_qa_test.dart --reporter expanded
+flutter build apk --release
+```
 
-## Run locally
+The visual-QA harness renders all **60 states** at the target design viewport, captures runtime output, compares it against stored Figma references, and uploads diagnostics for regression review.
 
-<pre>
+## 📱 Try Brees
+
+### Live portfolio
+**https://husseinabozina.github.io/Brees-Mobile-App/**
+
+### Android APK
+**https://husseinabozina.github.io/Brees-Mobile-App/downloads/brees-demo.apk**
+
+The Android demo build is generated from `main` by GitHub Actions and published with the portfolio.
+
+### Run locally
+
+```bash
 git clone https://github.com/Husseinabozina/Brees-Mobile-App.git
 cd Brees-Mobile-App
 flutter pub get
 flutter run
-</pre>
+```
 
-Recommended viewport for direct Figma comparison: **375 × 812**.
+## 📚 Project docs
 
-## Explore more
+- [Figma screen map](docs/FIGMA_SCREEN_MAP.md)
+- [Architecture notes](docs/ARCHITECTURE.md)
+- [Backend integration guide](docs/BACKEND_INTEGRATION.md)
 
-- **Live presentation:** https://husseinabozina.github.io/Brees-Mobile-App/
-- **Screen map:** [docs/FIGMA_SCREEN_MAP.md](docs/FIGMA_SCREEN_MAP.md)
-- **Architecture notes:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-- **Backend integration guide:** [docs/BACKEND_INTEGRATION.md](docs/BACKEND_INTEGRATION.md)
-- **Android builds:** [GitHub Releases](https://github.com/Husseinabozina/Brees-Mobile-App/releases)
+## Role & delivery
 
-## My role
+**Figma analysis → UI reconstruction → navigation → interaction → animation → architecture → data mapping → automated testing → visual QA → CI → portfolio delivery**
 
-**Figma analysis → Flutter UI reconstruction → navigation → interaction → animation → architecture → data mapping → testing → visual QA → CI → portfolio presentation.**
+<details>
+<summary><strong>Design credit</strong></summary>
+
+The visual direction is based on the public **Brees Fintech App UI Kit** on Figma Community. This repository is an independent Flutter implementation created for portfolio and code-review purposes.
+
+</details>
 
 <div align="center">
-  <sub>Built as a code-reviewable Flutter portfolio project.</sub>
+  <sub>Built with Flutter & Dart.</sub>
 </div>

@@ -13,13 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
+
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
+
       - name: Prepare visual QA fonts
         run: |
           curl -fL --retry 3 \
@@ -28,10 +31,12 @@ jobs:
           MATERIAL_ICONS_PATH="$(find "$FLUTTER_ROOT" -name MaterialIcons-Regular.otf | head -n 1)"
           test -n "$MATERIAL_ICONS_PATH"
           echo "VISUAL_QA_MATERIAL_ICONS_PATH=$MATERIAL_ICONS_PATH" >> "$GITHUB_ENV"
+
       - name: Run visual QA
         env:
           VISUAL_QA_FONT_PATH: /tmp/Inter.ttf
         run: flutter test tool/visual_qa_test.dart --reporter expanded
+
       - name: Upload visual QA artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -40,22 +45,39 @@ jobs:
           path: build/visual_qa
           if-no-files-found: error
 
-      - name: Refresh portfolio screenshots
+      - name: Build Android demo APK
+        run: flutter build apk --release --no-pub
+
+      - name: Upload Android demo APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: brees-android-demo
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+
+      - name: Refresh portfolio assets
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          mkdir -p screenshots
+          mkdir -p screenshots docs/downloads
+
           cp build/visual_qa/runtime/02_3-1853.png screenshots/onboarding.png
           cp build/visual_qa/runtime/05_3-1932.png screenshots/sign_up.png
           cp build/visual_qa/runtime/22_3-2922.png screenshots/home_dashboard.png
           cp build/visual_qa/runtime/25_3-3287.png screenshots/account_details.png
           cp build/visual_qa/runtime/46_3-5618.png screenshots/budgets.png
           cp build/visual_qa/runtime/48_3-6026.png screenshots/insights.png
+
+          cp build/app/outputs/flutter-apk/app-release.apk docs/downloads/brees-demo.apk
+          sha256sum docs/downloads/brees-demo.apk > docs/downloads/brees-demo.apk.sha256
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add screenshots
+          git add screenshots docs/downloads
+
           if git diff --cached --quiet; then
-            echo "Portfolio screenshots are already current."
+            echo "Portfolio assets are already current."
             exit 0
           fi
-          git commit -m "docs: refresh portfolio screenshots [skip ci]"
+
+          git commit -m "chore: refresh portfolio assets [skip ci]"
           git push
