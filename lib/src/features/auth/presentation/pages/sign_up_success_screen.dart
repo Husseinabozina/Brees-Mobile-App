@@ -74,38 +74,54 @@ class _SignUpSuccessScreenState extends State<SignUpSuccessScreen>
               top: 228,
               width: 208,
               height: 243,
-              child: Column(
+              child: Stack(
                 children: [
-                  ScaleTransition(
-                    scale: _checkScale,
-                    child: Image.asset(
-                      'assets/images/success_check.png',
-                      width: 123,
-                      height: 123,
-                      fit: BoxFit.contain,
+                  Positioned(
+                    left: 42.56,
+                    top: 0,
+                    width: 122.89,
+                    height: 122.83,
+                    child: ScaleTransition(
+                      scale: _checkScale,
+                      child: Image.asset(
+                        'assets/images/success_check.png',
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 56),
-                  FadeTransition(
-                    opacity: _contentOpacity,
-                    child: const Text.rich(
-                      TextSpan(
-                        style: TextStyle(
-                          color: BreesColors.heading,
-                          fontSize: 24,
-                          height: 32 / 24,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        children: [
-                          TextSpan(text: 'Hi! '),
-                          TextSpan(
-                            text: 'John',
-                            style: TextStyle(fontWeight: FontWeight.w700),
+                  Positioned(
+                    left: 0,
+                    top: 178.83,
+                    width: 208,
+                    height: 64,
+                    child: FadeTransition(
+                      opacity: _contentOpacity,
+                      child: const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          width: 208,
+                          child: Text.rich(
+                            TextSpan(
+                              style: TextStyle(
+                                color: BreesColors.heading,
+                                fontSize: 24,
+                                height: 32 / 24,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              children: [
+                                TextSpan(text: 'Hi! '),
+                                TextSpan(
+                                  text: 'John',
+                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                ),
+                                TextSpan(text: '\nWelcome to Brees'),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          TextSpan(text: '\nWelcome to Brees'),
-                        ],
+                        ),
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
