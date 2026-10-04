@@ -169,6 +169,7 @@ class _BreesFlowState extends State<BreesFlow> {
           controller: _signUpController,
           onBack: _back,
           onSuccess: () => _go(BreesStep.signUpSuccess),
+          onLogin: () => _go(BreesStep.login),
         ),
       BreesStep.signUpSuccess => SignUpSuccessScreen(
           key: const ValueKey('signup-success'),
