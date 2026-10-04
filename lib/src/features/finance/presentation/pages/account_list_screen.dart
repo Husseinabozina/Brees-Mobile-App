@@ -14,11 +14,13 @@ class AccountListScreen extends StatelessWidget {
     required this.snapshot,
     required this.onBack,
     required this.onOpenKuda,
+    required this.onAddAccount,
   });
 
   final FinanceSnapshot snapshot;
   final VoidCallback onBack;
   final VoidCallback onOpenKuda;
+  final VoidCallback onAddAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +123,7 @@ class AccountListScreen extends StatelessWidget {
               child: BreesButton(
                 label: '+ Add new account',
                 width: 335,
-                onPressed: () {},
+                onPressed: onAddAccount,
               ),
             ),
             const HomeIndicator(),

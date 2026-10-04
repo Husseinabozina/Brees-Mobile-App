@@ -13,11 +13,13 @@ class LoginScreen extends StatefulWidget {
     required this.onBack,
     required this.onForgotPassword,
     required this.onLogin,
+    required this.onRegister,
   });
 
   final VoidCallback onBack;
   final VoidCallback onForgotPassword;
   final VoidCallback onLogin;
+  final VoidCallback onRegister;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -112,7 +114,10 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  GestureDetector(
+                    key: const Key('login-register'),
+                    onTap: widget.onRegister,
+                    child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24,
                       vertical: 9,
@@ -129,6 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                  ),
                   ),
                   BreesButton(
                     label: 'Login',

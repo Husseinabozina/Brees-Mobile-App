@@ -11,11 +11,13 @@ class GetStartedGuideScreen extends StatefulWidget {
     required this.onEmail,
     required this.onAccount,
     required this.includeSecurity,
+    required this.onSkip,
   });
 
   final VoidCallback onEmail;
   final VoidCallback onAccount;
   final bool includeSecurity;
+  final VoidCallback onSkip;
 
   @override
   State<GetStartedGuideScreen> createState() => _GetStartedGuideScreenState();
@@ -95,7 +97,10 @@ class _GetStartedGuideScreenState extends State<GetStartedGuideScreen> {
             Positioned(
               right: 20,
               top: 64,
-              child: Container(
+              child: GestureDetector(
+                key: const Key('guide-skip'),
+                onTap: widget.onSkip,
+                child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.15),
@@ -105,6 +110,7 @@ class _GetStartedGuideScreenState extends State<GetStartedGuideScreen> {
                   'Skip',
                   style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
+              ),
               ),
             ),
             Positioned(

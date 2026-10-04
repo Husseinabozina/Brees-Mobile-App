@@ -10,11 +10,13 @@ class BrowserAccountScreen extends StatefulWidget {
     super.key,
     required this.message,
     required this.onPressed,
+    required this.onBack,
     this.showPasswordForm = false,
   });
 
   final String message;
   final VoidCallback onPressed;
+  final VoidCallback onBack;
   final bool showPasswordForm;
 
   @override
@@ -37,6 +39,7 @@ class _BrowserAccountScreenState extends State<BrowserAccountScreen> {
     return DesignCanvas(
       background: Colors.white,
       child: ChromeShell(
+        onBack: widget.onBack,
         child: AnimatedOpacity(
           opacity: _animate ? 1 : 0,
           duration: const Duration(milliseconds: 420),

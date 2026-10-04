@@ -9,10 +9,12 @@ class GmailOpenMailScreen extends StatelessWidget {
   const GmailOpenMailScreen({
     super.key,
     required this.onPrimaryAction,
+    required this.onBack,
     this.actionLabel = 'Create new password',
   });
 
   final VoidCallback onPrimaryAction;
+  final VoidCallback onBack;
   final String actionLabel;
 
   @override
@@ -26,17 +28,26 @@ class GmailOpenMailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   children: [
-                    Icon(Icons.arrow_back_rounded, color: Color(0xFF5F6368)),
-                    Spacer(),
-                    Icon(Icons.archive_outlined, color: Color(0xFF5F6368)),
-                    SizedBox(width: 24),
-                    Icon(Icons.delete_outline_rounded, color: Color(0xFF5F6368)),
-                    SizedBox(width: 24),
-                    Icon(Icons.mark_email_unread_outlined, color: Color(0xFF5F6368)),
-                    SizedBox(width: 24),
-                    Icon(Icons.more_vert_rounded, color: Color(0xFF5F6368)),
+                    GestureDetector(
+                      key: const Key('gmail-open-back'),
+                      onTap: onBack,
+                      behavior: HitTestBehavior.opaque,
+                      child: const SizedBox(
+                        width: 36,
+                        height: 36,
+                        child: Icon(Icons.arrow_back_rounded, color: Color(0xFF5F6368)),
+                      ),
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.archive_outlined, color: Color(0xFF5F6368)),
+                    const SizedBox(width: 24),
+                    const Icon(Icons.delete_outline_rounded, color: Color(0xFF5F6368)),
+                    const SizedBox(width: 24),
+                    const Icon(Icons.mark_email_unread_outlined, color: Color(0xFF5F6368)),
+                    const SizedBox(width: 24),
+                    const Icon(Icons.more_vert_rounded, color: Color(0xFF5F6368)),
                   ],
                 ),
                 const SizedBox(height: 28),

@@ -6,10 +6,12 @@ class ChromeShell extends StatelessWidget {
   const ChromeShell({
     super.key,
     required this.child,
+    required this.onBack,
     this.address = 'getbrees.com',
   });
 
   final Widget child;
+  final VoidCallback onBack;
   final String address;
 
   @override
@@ -112,17 +114,22 @@ class ChromeShell extends StatelessWidget {
                 color: Colors.white,
                 border: Border(top: BorderSide(color: Color(0xFFD8D8D8))),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Icon(Icons.arrow_back_rounded, color: Color(0xFF858B91), size: 32),
-                  Icon(Icons.arrow_forward_rounded, color: Color(0xFF858B91), size: 32),
-                  CircleAvatar(
+                  GestureDetector(
+                    key: const Key('chrome-back'),
+                    onTap: onBack,
+                    behavior: HitTestBehavior.opaque,
+                    child: const SizedBox(width: 54, height: 54, child: Icon(Icons.arrow_back_rounded, color: Color(0xFF858B91), size: 32)),
+                  ),
+                  const Icon(Icons.arrow_forward_rounded, color: Color(0xFF858B91), size: 32),
+                  const CircleAvatar(
                     radius: 18,
                     backgroundColor: Color(0xFFE8EAED),
                   ),
-                  _TabCount(),
-                  Icon(Icons.more_horiz_rounded, color: Color(0xFF858B91), size: 32),
+                  const _TabCount(),
+                  const Icon(Icons.more_horiz_rounded, color: Color(0xFF858B91), size: 32),
                 ],
               ),
             ),
