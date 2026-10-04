@@ -91,19 +91,36 @@ class TransactionsScreen extends StatelessWidget {
                   children: [
                     Container(
                       height: 52,
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFAFBFF),
                         border: Border.all(color: const Color(0xFFEBEFFF), width: .5),
                         borderRadius: BorderRadius.circular(24),
                       ),
-                      child: const Row(
+                      child: const Stack(
                         children: [
-                          Icon(Icons.search_rounded, color: Color(0xFF9DAEFF), size: 19),
-                          SizedBox(width: 16),
-                          Text(
-                            'Search transactions',
-                            style: TextStyle(color: Color(0xFF97969E), fontSize: 14),
+                          Positioned(
+                            left: 18,
+                            top: 16.5,
+                            child: Icon(
+                              Icons.search_rounded,
+                              color: Color(0xFF9DAEFF),
+                              size: 19,
+                            ),
+                          ),
+                          Positioned(
+                            left: 53,
+                            top: 16,
+                            right: 18,
+                            child: Text(
+                              'Search transactions',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Color(0xFF97969E),
+                                fontSize: 14,
+                                height: 18 / 14,
+                              ),
+                            ),
                           ),
                         ],
                       ),
