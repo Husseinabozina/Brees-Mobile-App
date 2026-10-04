@@ -12,11 +12,13 @@ class SignUpScreen extends StatefulWidget {
     required this.controller,
     required this.onBack,
     required this.onSuccess,
+    required this.onLogin,
   });
 
   final SignUpController controller;
   final VoidCallback onBack;
   final VoidCallback onSuccess;
+  final VoidCallback onLogin;
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -265,7 +267,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ? 'Please wait'
                           : 'Login',
                       width: 186,
-                      onPressed: _submit,
+                      onPressed: widget.onLogin,
                     ),
                   ),
                 ],
