@@ -42,40 +42,42 @@ class _BreesFlowState extends State<BreesFlow> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 420),
-      switchInCurve: Curves.easeOutCubic,
-      switchOutCurve: Curves.easeInCubic,
-      transitionBuilder: (child, animation) {
-        final offset = Tween(
-          begin: const Offset(0.035, 0),
-          end: Offset.zero,
-        ).animate(animation);
-        return FadeTransition(
-          opacity: animation,
-          child: SlideTransition(position: offset, child: child),
-        );
-      },
-      child: switch (_step) {
-        BreesStep.launch => LaunchScreen(
-            key: const ValueKey('launch'),
-            onFinished: () => _go(BreesStep.onboarding),
-          ),
-        BreesStep.onboarding => OnboardingScreen(
-            key: const ValueKey('onboarding'),
-            onCompleted: () => _go(BreesStep.signUp),
-          ),
-        BreesStep.signUp => SignUpScreen(
-            key: const ValueKey('signup'),
-            controller: _signUpController,
-            onBack: () => _go(BreesStep.onboarding),
-            onSuccess: () => _go(BreesStep.signUpSuccess),
-          ),
-        BreesStep.signUpSuccess => SignUpSuccessScreen(
-            key: const ValueKey('signup-success'),
-            onContinue: () => _go(BreesStep.signUp),
-          ),
-      },
+    return Scaffold(
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 420),
+        switchInCurve: Curves.easeOutCubic,
+        switchOutCurve: Curves.easeInCubic,
+        transitionBuilder: (child, animation) {
+          final offset = Tween(
+            begin: const Offset(0.035, 0),
+            end: Offset.zero,
+          ).animate(animation);
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(position: offset, child: child),
+          );
+        },
+        child: switch (_step) {
+          BreesStep.launch => LaunchScreen(
+              key: const ValueKey('launch'),
+              onFinished: () => _go(BreesStep.onboarding),
+            ),
+          BreesStep.onboarding => OnboardingScreen(
+              key: const ValueKey('onboarding'),
+              onCompleted: () => _go(BreesStep.signUp),
+            ),
+          BreesStep.signUp => SignUpScreen(
+              key: const ValueKey('signup'),
+              controller: _signUpController,
+              onBack: () => _go(BreesStep.onboarding),
+              onSuccess: () => _go(BreesStep.signUpSuccess),
+            ),
+          BreesStep.signUpSuccess => SignUpSuccessScreen(
+              key: const ValueKey('signup-success'),
+              onContinue: () => _go(BreesStep.signUp),
+            ),
+        },
+      ),
     );
   }
 }
