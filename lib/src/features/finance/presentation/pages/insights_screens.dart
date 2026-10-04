@@ -730,58 +730,86 @@ class _ReportCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
       ),
-      child: Column(
+      child: Stack(
         children: [
-          const SizedBox(height: 20),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xFF131313),
-              fontSize: 24,
-              height: 1.4,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 14),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFCFCFC),
-              border: Border.all(color: const Color(0xFFE3E5E5)),
-              borderRadius: BorderRadius.circular(24),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 32,
-                  height: 32,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: iconBackground,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(icon, color: iconColor, size: 20),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  category,
+          Positioned(
+            left: 20,
+            right: 20,
+            top: 19,
+            height: 70,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: SizedBox(
+                width: 295,
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 14,
+                    color: Color(0xFF131313),
+                    fontSize: 24,
+                    height: 1.35,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-              ],
+              ),
             ),
           ),
-          const SizedBox(height: 15),
-          Text(
-            amount,
-            style: const TextStyle(
-              color: Color(0xFF131313),
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
+          Positioned(
+            left: 84,
+            right: 84,
+            top: 108,
+            height: 60,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFCFCFC),
+                border: Border.all(color: const Color(0xFFE3E5E5)),
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 32,
+                    height: 32,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: iconBackground,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(icon, color: iconColor, size: 20),
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      category,
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            left: 20,
+            right: 20,
+            top: 190,
+            height: 30,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                amount,
+                style: const TextStyle(
+                  color: Color(0xFF131313),
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
         ],
