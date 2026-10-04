@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 import 'package:brees_mobile_app/src/features/onboarding/presentation/pages/brees_flow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _VisualCase {
@@ -117,9 +118,13 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
+    await _loadVisualQaFont(tester);
+
     final root = Directory('build/visual_qa');
     final runtime = Directory('${root.path}/runtime');
+    final referenceOutput = Directory('${root.path}/reference');
     runtime.createSync(recursive: true);
+    referenceOutput.createSync(recursive: true);
 
     final rows = <String>[
       'screen,node,step,similarity,mae,changed_pixel_ratio,width,height',
@@ -130,6 +135,10 @@ void main() {
     for (final visualCase in _cases) {
       try {
         await _pumpCase(tester, visualCase);
+        await tester.runAsync<void>(() async {
+          await Future<void>.delayed(const Duration(milliseconds: 90));
+        });
+        await tester.pump();
 
         final flutterException = tester.takeException();
         if (flutterException != null) {
@@ -165,6 +174,9 @@ void main() {
           final referenceBytes = File(
             visualCase.referencePath,
           ).readAsBytesSync();
+          File(
+            '${referenceOutput.path}/${visualCase.fileStem}.png',
+          ).writeAsBytesSync(referenceBytes, flush: true);
           final referenceImage = await _decodeImage(
             referenceBytes,
             targetWidth: actualImage.width,
@@ -259,6 +271,26 @@ void main() {
       isEmpty,
       reason: 'Every Figma target must produce a runtime screenshot.',
     );
+  });
+}
+
+
+Future<void> _loadVisualQaFont(WidgetTester tester) async {
+  final fontPath = Platform.environment['VISUAL_QA_FONT_PATH'];
+  if (fontPath == null || fontPath.isEmpty) {
+    debugPrint(
+      'VISUAL_QA_FONT_PATH is not set; Flutter test fallback font will be used.',
+    );
+    return;
+  }
+
+  await tester.runAsync<void>(() async {
+    final bytes = File(fontPath).readAsBytesSync();
+    final loader = FontLoader('Inter');
+    loader.addFont(
+      Future<ByteData>.value(ByteData.sublistView(bytes)),
+    );
+    await loader.load();
   });
 }
 
