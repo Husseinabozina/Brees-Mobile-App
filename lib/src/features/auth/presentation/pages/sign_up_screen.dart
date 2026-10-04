@@ -263,6 +263,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Opacity(
                     opacity: widget.controller.isSubmitting ? 0.65 : 1,
                     child: BreesButton(
+                      key: const Key('signup-login'),
                       label: widget.controller.isSubmitting
                           ? 'Please wait'
                           : 'Login',
