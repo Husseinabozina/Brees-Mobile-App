@@ -134,6 +134,18 @@ class ChromeShell extends StatelessWidget {
               ),
             ),
           ),
+          Positioned(
+            left: 121,
+            bottom: 8,
+            width: 134,
+            height: 5,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: Color(0xFF131313),
+                borderRadius: BorderRadius.all(Radius.circular(100)),
+              ),
+            ),
+          ),
         ],
       ),
     );

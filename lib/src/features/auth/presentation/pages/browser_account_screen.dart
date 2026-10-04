@@ -56,39 +56,95 @@ class _BrowserAccountScreenState extends State<BrowserAccountScreen> {
 }
 
 class _SuccessContent extends StatelessWidget {
-  const _SuccessContent({required this.message, required this.onPressed});
+  const _SuccessContent({
+    required this.message,
+    required this.onPressed,
+  });
 
   final String message;
   final VoidCallback onPressed;
 
+  bool get _passwordReset => message.contains('password has been reset');
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        const Spacer(flex: 3),
-        Image.asset('assets/images/success_check.png', width: 68, height: 68),
-        const SizedBox(height: 26),
-        const Text.rich(
-          TextSpan(
-            style: TextStyle(color: BreesColors.heading, fontSize: 20, fontWeight: FontWeight.w500),
-            children: [
-              TextSpan(text: 'Hi! '),
-              TextSpan(text: 'John', style: TextStyle(fontWeight: FontWeight.w700)),
-            ],
+        Positioned(
+          left: 154.94,
+          top: 174.87,
+          width: 65.11,
+          height: 65.08,
+          child: Image.asset(
+            'assets/images/success_check.png',
+            fit: BoxFit.contain,
           ),
         ),
-        const SizedBox(height: 8),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 36),
+        Positioned(
+          left: 20,
+          right: 20,
+          top: _passwordReset ? 263.95 : 264.95,
+          child: const Text.rich(
+            TextSpan(
+              style: TextStyle(
+                color: BreesColors.heading,
+                fontSize: 20,
+                height: 28 / 20,
+                fontWeight: FontWeight.w500,
+              ),
+              children: [
+                TextSpan(text: 'Hi! '),
+                TextSpan(
+                  text: 'John',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Positioned(
+          left: _passwordReset ? 20 : 69,
+          right: _passwordReset ? 20 : 69,
+          top: _passwordReset ? 307.95 : 294.95,
+          height: _passwordReset ? 44 : 22,
           child: Text(
             message,
+            maxLines: _passwordReset ? 2 : 1,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: BreesColors.heading, fontSize: 16, height: 1.35),
+            style: const TextStyle(
+              color: BreesColors.heading,
+              fontSize: 16,
+              height: 22 / 16,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ),
-        const SizedBox(height: 42),
-        BreesButton(label: 'Go to Bress app', width: 267, onPressed: onPressed),
-        const Spacer(flex: 5),
+        Positioned(
+          left: 54,
+          top: _passwordReset ? 393.95 : 355.95,
+          width: 267,
+          height: 62,
+          child: FilledButton(
+            onPressed: onPressed,
+            style: FilledButton.styleFrom(
+              backgroundColor: BreesColors.primary,
+              foregroundColor: Colors.white,
+              padding: EdgeInsets.zero,
+              elevation: 0,
+              shadowColor: Colors.transparent,
+              shape: const StadiumBorder(),
+            ),
+            child: const Text(
+              'Go to Bress app',
+              style: TextStyle(
+                fontSize: 16,
+                height: 20 / 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
