@@ -378,15 +378,38 @@ class _BreesFlowState extends State<BreesFlow> {
           onBack: _back,
           onContinue: () => _go(BreesStep.transactions),
         ),
-      BreesStep.homeSearch => HomeSearchScreen(
-          key: const ValueKey('home-search'),
-          onClose: _back,
-          onOpenTransactions: () => _go(BreesStep.transactions),
+      BreesStep.homeSearch => _financeScreen(
+          () => HomeSearchScreen(
+            key: const ValueKey('home-search'),
+            onClose: _back,
+            onOpenTransactions: () => _go(BreesStep.transactions),
+            background: HomeDashboardScreen(
+              snapshot: _financeController.snapshot!,
+              extended: true,
+              onOpenExtended: () {},
+              onOpenAccounts: () {},
+              onSortTransactions: () {},
+              onNotifications: () {},
+              onSearch: () {},
+              onTransactions: () {},
+              onBudget: () {},
+              onInsights: () {},
+              onProfile: () {},
+            ),
+          ),
         ),
       BreesStep.budgetIntro => BudgetIntroScreen(
           key: const ValueKey('budget-intro'),
           onClose: _back,
           onCreate: () => _go(BreesStep.budgetCreateInitial),
+          background: BudgetEmptyScreen(
+            onBack: () {},
+            onIntro: () {},
+            onHome: () {},
+            onBudget: () {},
+            onInsights: () {},
+            onProfile: () {},
+          ),
         ),
       BreesStep.budgetCreateInitial => BudgetCreateBasicsScreen(
           key: const ValueKey('budget-create-initial'),
@@ -466,6 +489,12 @@ class _BreesFlowState extends State<BreesFlow> {
           key: const ValueKey('insight-intro'),
           onClose: _back,
           onViewInsights: () => _go(BreesStep.insights),
+          background: InsightsScreen(
+            onHome: () {},
+            onBudget: () {},
+            onProfile: () {},
+            onOpenReport: () {},
+          ),
         ),
       BreesStep.insights => InsightsScreen(
           key: const ValueKey('insights'),
