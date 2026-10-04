@@ -319,9 +319,9 @@ Future<void> _pumpCase(
     for (var i = 0; i < visualCase.onboardingPage!; i++) {
       await tester.drag(
         find.byKey(const Key('onboarding-page-view')),
-        const Offset(-350, 0),
+        const Offset(-400, 0),
       );
-      await tester.pump(const Duration(milliseconds: 600));
+      await tester.pumpAndSettle();
     }
     return;
   }
