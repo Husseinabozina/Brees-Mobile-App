@@ -17,3 +17,12 @@ jobs:
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
+      - name: Run visual QA
+        run: flutter test tool/visual_qa_test.dart --reporter expanded
+      - name: Upload visual QA artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-qa
+          path: build/visual_qa
+          if-no-files-found: error

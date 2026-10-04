@@ -19,11 +19,14 @@ class DesignCanvas extends StatelessWidget {
       child: Center(
         child: FittedBox(
           fit: BoxFit.contain,
-          child: SizedBox(
-            key: const Key('brees-design-canvas'),
-            width: referenceSize.width,
-            height: referenceSize.height,
-            child: child,
+          child: RepaintBoundary(
+            key: const Key('brees-capture-boundary'),
+            child: SizedBox(
+              key: const Key('brees-design-canvas'),
+              width: referenceSize.width,
+              height: referenceSize.height,
+              child: child,
+            ),
           ),
         ),
       ),
