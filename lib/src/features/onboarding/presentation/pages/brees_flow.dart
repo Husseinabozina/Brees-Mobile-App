@@ -378,25 +378,10 @@ class _BreesFlowState extends State<BreesFlow> {
           onBack: _back,
           onContinue: () => _go(BreesStep.transactions),
         ),
-      BreesStep.homeSearch => _financeScreen(
-          () => HomeSearchScreen(
-            key: const ValueKey('home-search'),
-            onClose: _back,
-            onOpenTransactions: () => _go(BreesStep.transactions),
-            background: HomeDashboardScreen(
-              snapshot: _financeController.snapshot!,
-              extended: true,
-              onOpenExtended: () {},
-              onOpenAccounts: () {},
-              onSortTransactions: () {},
-              onNotifications: () {},
-              onSearch: () {},
-              onTransactions: () {},
-              onBudget: () {},
-              onInsights: () {},
-              onProfile: () {},
-            ),
-          ),
+      BreesStep.homeSearch => HomeSearchScreen(
+          key: const ValueKey('home-search'),
+          onClose: _back,
+          onOpenTransactions: () => _go(BreesStep.transactions),
         ),
       BreesStep.budgetIntro => BudgetIntroScreen(
           key: const ValueKey('budget-intro'),
