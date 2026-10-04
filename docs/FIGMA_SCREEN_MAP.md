@@ -2,7 +2,7 @@
 
 Source file: **Brees Fintech App UI Kit**
 
-The app now implements the first **26 visual screens** in canvas order. Screens 2–4 are the three pages inside the Flutter onboarding `PageView`.
+The app now implements the first **46 visual screens/states** in canvas order. Screens 2–4 are the three pages inside the Flutter onboarding `PageView`.
 
 ## First 6
 
@@ -13,7 +13,7 @@ The app now implements the first **26 visual screens** in canvas order. Screens 
 5. `3:1932` — Sign Up
 6. `3:2001` — Sign Up Success
 
-## Batch 2 — next 20
+## Batch 2 — screens 7–26
 
 7. `3:2036` — Get started user guide
 8. `3:2093` — Email verification Sent
@@ -36,9 +36,44 @@ The app now implements the first **26 visual screens** in canvas order. Screens 
 25. `3:3287` — My Account
 26. `3:3343` — Sort transactions
 
+## Batch 3 — screens 27–46
+
+27. `3:3419` — Transactions sorted out
+28. `3:3500` — Notification
+29. `3:3731` — Home / empty welcome state
+30. `3:3792` — Budget / empty state
+31. `3:3935` — Transactions
+32. `3:4073` — Transaction details
+33. `3:4141` — Transaction filters
+34. `3:4362` — Home search overlay
+35. `3:4532` — Budget intro
+36. `3:4685` — Create budget / step 1 initial
+37. `3:4757` — Budget cycle / monthly
+38. `3:4898` — Budget cycle / weekly
+39. `3:5041` — Create budget / step 1 configured
+40. `3:5113` — Create budget / step 2 amount
+41. `3:5193` — Budget preview / alerts off
+42. `3:5291` — Budget preview / alerts on
+43. `3:5390` — Budget created success
+44. `3:5437` — Budget detail / no transactions
+45. `3:5509` — Budget detail / in use
+46. `3:5618` — Budget list / populated
+
+## Interaction and navigation contract
+
+BreesFlow maintains an explicit in-app history stack and uses `PopScope`, so Android system back and visible back controls resolve through the same state history instead of closing the single Flutter route.
+
+Major Brees controls now have actual actions, including onboarding and guide skip, sign-up/login switching, Gmail and Chrome back controls, account add, home notifications/search, finance bottom navigation, transaction filter/detail flow, transaction sorting completion, and the complete budget creation flow.
+
+## Overflow regression gate
+
+The 375×812 Figma viewport is now covered by `test/runtime_regression_test.dart`. The gate renders the newly added states and fails when Flutter reports a `RenderFlex` overflow or another layout exception. It also exercises Android back, the Gmail visible back arrow, repaired primary controls, home notification/search, and budget creation interactions.
+
+For fixed-size Figma cards, implementation favors explicit `Stack`/`Positioned` geometry when a padded `Column` or `Row` would make text metrics exceed the exact card constraints. Scrollable content uses `ListView` or `SingleChildScrollView`.
+
 ## Architecture
 
-The new finance area follows the same Clean Architecture boundary as auth:
+The finance area follows the same Clean Architecture boundary as auth:
 
 - `features/finance/domain/entities`
 - `features/finance/domain/repositories`
@@ -51,13 +86,6 @@ External-app states (Gmail and Chrome) live under `features/system_preview` so t
 
 ## Motion
 
-The second batch adds:
-- staggered guide-card reveal
-- envelope scale entrance
-- Chrome content slide/fade
-- floating rocket motion
-- animated password/checkbox interactions
-- dashboard transition + scrolling extended state
-- transaction-category approve/reject microinteractions
+The implementation includes staggered guide-card reveal, envelope entrance, Chrome slide/fade, floating rocket motion, password/checkbox interactions, dashboard transitions, transaction-category approve/reject feedback, search/filter interactions, and budget-creation state changes.
 
-The original full-screen Figma screenshots remain reference targets only. Screen UI is built with Flutter widgets; extracted Figma illustration/logo nodes are local assets under `assets/images/`.
+The original Figma screenshots remain reference targets only. Screen UI is built with Flutter widgets; extracted Figma illustration/logo nodes are local assets under `assets/images/`.
