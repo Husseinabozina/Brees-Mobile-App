@@ -174,27 +174,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AnimatedContainer(
+                          AnimatedSwitcher(
                             duration: const Duration(milliseconds: 180),
-                            width: 22,
-                            height: 22,
-                            decoration: BoxDecoration(
-                              color: widget.controller.acceptedTerms
-                                  ? BreesColors.primary
-                                  : Colors.transparent,
-                              border: Border.all(
-                                color: BreesColors.primary,
-                                width: 1.5,
-                              ),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
                             child: widget.controller.acceptedTerms
-                                ? const Icon(
-                                    Icons.check_rounded,
-                                    color: Colors.white,
-                                    size: 16,
+                                ? Container(
+                                    key: const ValueKey('terms-checked'),
+                                    width: 22,
+                                    height: 22,
+                                    decoration: BoxDecoration(
+                                      color: BreesColors.primary,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: const Icon(
+                                      Icons.check_rounded,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
                                   )
-                                : null,
+                                : Image.asset(
+                                    'assets/images/signup_checkbox.png',
+                                    key: const ValueKey('terms-unchecked'),
+                                    width: 22,
+                                    height: 22,
+                                    fit: BoxFit.contain,
+                                  ),
                           ),
                           const SizedBox(width: 8),
                           const Expanded(
