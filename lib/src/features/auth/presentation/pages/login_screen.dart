@@ -162,38 +162,48 @@ class _LoginField extends StatelessWidget {
     return Container(
       width: 335,
       height: 61,
-      padding: const EdgeInsets.fromLTRB(20, 10, 18, 8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
       ),
-      child: Row(
+      child: Stack(
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: const TextStyle(
-                    color: BreesColors.muted,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  value,
-                  style: const TextStyle(
-                    color: Color(0xFF040C22),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
+          Positioned(
+            left: 20,
+            top: 11,
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: BreesColors.muted,
+                fontSize: 10,
+                height: 12 / 10,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
-          if (trailing != null) trailing!,
+          Positioned(
+            left: 20,
+            top: 31,
+            right: trailing == null ? 20 : 52,
+            child: Text(
+              value,
+              maxLines: 1,
+              style: const TextStyle(
+                color: Color(0xFF040C22),
+                fontSize: 14,
+                height: 17 / 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          if (trailing != null)
+            Positioned(
+              right: 19,
+              top: 20,
+              width: 22,
+              height: 22,
+              child: trailing!,
+            ),
         ],
       ),
     );
