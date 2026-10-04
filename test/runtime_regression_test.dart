@@ -100,20 +100,31 @@ void main() {
     expectNoFlutterException(tester, 'interaction must not produce a Flutter exception');
   });
 
-  testWidgets('previously dead primary controls now navigate', (tester) async {
+  testWidgets('login register action now navigates', (tester) async {
     await pumpStep(tester, BreesStep.login);
 
     await tester.tap(find.byKey(const Key('login-register')));
     await tester.pump(const Duration(milliseconds: 350));
     expect(find.text('Welcome to Brees'), findsOneWidget);
 
-    await tester.pumpWidget(const MaterialApp(home: BreesFlow(initialStep: BreesStep.accountList)));
-    await tester.pump(const Duration(milliseconds: 450));
-    await tester.tap(find.text('+ Add new account'));
+    expectNoFlutterException(
+      tester,
+      'login register interaction must not produce a Flutter exception',
+    );
+  });
+
+  testWidgets('account add action now navigates', (tester) async {
+    await pumpStep(tester, BreesStep.accountList);
+
+    expect(find.byKey(const Key('account-add-new')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('account-add-new')));
     await tester.pump(const Duration(milliseconds: 350));
     expect(find.text('Let’s get your account set up!'), findsOneWidget);
 
-    expectNoFlutterException(tester, 'interaction must not produce a Flutter exception');
+    expectNoFlutterException(
+      tester,
+      'account add interaction must not produce a Flutter exception',
+    );
   });
 
   testWidgets('home notification and search actions are interactive', (tester) async {
