@@ -212,7 +212,6 @@ class _BreesFlowState extends State<BreesFlow> {
         ),
       BreesStep.openMailVerification => GmailOpenMailScreen(
           key: const ValueKey('open-mail-verification'),
-          actionLabel: 'Verify email',
           onBack: _back,
           onPrimaryAction: () => _go(BreesStep.browserVerified),
         ),
