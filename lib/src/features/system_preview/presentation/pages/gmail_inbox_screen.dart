@@ -382,21 +382,39 @@ class _AttachmentChip extends StatelessWidget {
     return Container(
       width: 90,
       height: 24,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         border: Border.all(color: const Color(0xFFC8C8C8)),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Row(
+      child: Stack(
         children: [
-          Icon(Icons.insert_drive_file_rounded, size: 16, color: color),
-          const SizedBox(width: 3),
-          const Text(
-            'filename',
-            style: TextStyle(
-              color: Color(0xFF666666),
-              fontSize: 14,
-              height: 16 / 14,
+          Positioned(
+            left: 8,
+            top: 4,
+            width: 16,
+            height: 16,
+            child: Icon(
+              Icons.insert_drive_file_rounded,
+              size: 16,
+              color: color,
+            ),
+          ),
+          const Positioned(
+            left: 27,
+            top: 4,
+            width: 55,
+            height: 16,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'filename',
+                style: TextStyle(
+                  color: Color(0xFF666666),
+                  fontSize: 14,
+                  height: 16 / 14,
+                ),
+              ),
             ),
           ),
         ],
