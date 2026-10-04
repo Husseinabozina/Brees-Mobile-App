@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:brees_mobile_app/src/core/theme/brees_theme.dart';
 import 'package:brees_mobile_app/src/features/onboarding/presentation/pages/brees_flow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -176,7 +177,7 @@ void main() {
           File(
             '${referenceOutput.path}/${visualCase.fileStem}.png',
           ).writeAsBytesSync(referenceBytes, flush: true);
-          final referenceImage = await _decodeImage(
+          final referenceImage = await _decodeReferenceImage(
             referenceBytes,
             targetWidth: actualImage.width,
             targetHeight: actualImage.height,
@@ -300,6 +301,7 @@ Future<void> _pumpCase(
   await tester.pumpWidget(
     MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: BreesTheme.light,
       home: BreesFlow(initialStep: visualCase.step),
     ),
   );
@@ -322,18 +324,97 @@ Future<void> _pumpCase(
   );
 }
 
-Future<ui.Image> _decodeImage(
+Future<ui.Image> _decodeReferenceImage(
   Uint8List bytes, {
   required int targetWidth,
   required int targetHeight,
 }) async {
-  final codec = await ui.instantiateImageCodec(
-    bytes,
-    targetWidth: targetWidth,
-    targetHeight: targetHeight,
-  );
+  final codec = await ui.instantiateImageCodec(bytes);
   final frame = await codec.getNextFrame();
-  return frame.image;
+  final original = frame.image;
+
+  if (original.width == targetWidth && original.height == targetHeight) {
+    return original;
+  }
+
+  final rgba = await original.toByteData(
+    format: ui.ImageByteFormat.rawRgba,
+  );
+  if (rgba == null) {
+    throw StateError('Could not inspect Figma reference pixels.');
+  }
+
+  final pixels = rgba.buffer.asUint8List();
+  var minX = original.width;
+  var minY = original.height;
+  var maxX = -1;
+  var maxY = -1;
+
+  for (var y = 0; y < original.height; y++) {
+    for (var x = 0; x < original.width; x++) {
+      final alpha = pixels[(y * original.width + x) * 4 + 3];
+      if (alpha < 128) continue;
+      minX = math.min(minX, x);
+      minY = math.min(minY, y);
+      maxX = math.max(maxX, x);
+      maxY = math.max(maxY, y);
+    }
+  }
+
+  ui.Rect sourceRect;
+  if (maxX >= minX && maxY >= minY) {
+    final opaqueWidth = maxX - minX + 1;
+    final opaqueHeight = maxY - minY + 1;
+    final widthClose = (opaqueWidth - targetWidth).abs() <= 3;
+    final heightClose = (opaqueHeight - targetHeight).abs() <= 3;
+
+    if (widthClose && heightClose) {
+      sourceRect = ui.Rect.fromLTWH(
+        minX.toDouble(),
+        minY.toDouble(),
+        opaqueWidth.toDouble(),
+        opaqueHeight.toDouble(),
+      );
+    } else {
+      final sourceHeight = math.min(
+        original.height.toDouble(),
+        targetHeight * original.width / targetWidth,
+      );
+      sourceRect = ui.Rect.fromLTWH(
+        0,
+        0,
+        original.width.toDouble(),
+        sourceHeight,
+      );
+    }
+  } else {
+    final sourceHeight = math.min(
+      original.height.toDouble(),
+      targetHeight * original.width / targetWidth,
+    );
+    sourceRect = ui.Rect.fromLTWH(
+      0,
+      0,
+      original.width.toDouble(),
+      sourceHeight,
+    );
+  }
+
+  final recorder = ui.PictureRecorder();
+  final canvas = Canvas(recorder);
+  canvas.drawImageRect(
+    original,
+    sourceRect,
+    ui.Rect.fromLTWH(
+      0,
+      0,
+      targetWidth.toDouble(),
+      targetHeight.toDouble(),
+    ),
+    Paint(),
+  );
+  final picture = recorder.endRecording();
+  return picture.toImage(targetWidth, targetHeight);
 }
 
 Future<_Metrics> _compareImages(
