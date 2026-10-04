@@ -17,6 +17,8 @@ import '../../../finance/presentation/pages/account_list_screen.dart';
 import '../../../finance/presentation/pages/budget_screens.dart';
 import '../../../finance/presentation/pages/home_auxiliary_screens.dart';
 import '../../../finance/presentation/pages/home_dashboard_screen.dart';
+import '../../../finance/presentation/pages/insights_screens.dart';
+import '../../../finance/presentation/pages/profile_screens.dart';
 import '../../../finance/presentation/pages/transaction_history_screens.dart';
 import '../../../finance/presentation/pages/transaction_sort_screen.dart';
 import '../../../system_preview/presentation/pages/gmail_inbox_screen.dart';
@@ -72,6 +74,20 @@ enum BreesStep {
   budgetDetailEmpty,
   budgetDetailInUse,
   budgetList,
+  insightIntro,
+  insights,
+  reportExpense,
+  reportIncome,
+  reportBudget,
+  reportQuote,
+  profile,
+  editProfile,
+  settings,
+  passwordSettings,
+  notificationSettings,
+  helpCenter,
+  helpTopic,
+  homeLoading,
 }
 
 class BreesFlow extends StatefulWidget {
@@ -150,8 +166,8 @@ class _BreesFlowState extends State<BreesFlow> {
   }
 
   void _openBudget() => _go(BreesStep.budgetEmpty);
-  void _openInsights() => _go(BreesStep.homeExtended);
-  void _openProfile() => _go(BreesStep.accountList);
+  void _openInsights() => _go(BreesStep.insightIntro);
+  void _openProfile() => _go(BreesStep.profile);
 
   @override
   Widget build(BuildContext context) {
@@ -443,6 +459,84 @@ class _BreesFlowState extends State<BreesFlow> {
           onOpenBudget: () => _go(BreesStep.budgetDetailInUse),
           onHome: () => _goRoot(BreesStep.homeCompact),
           onBudget: () {},
+          onInsights: _openInsights,
+          onProfile: _openProfile,
+        ),
+      BreesStep.insightIntro => InsightIntroScreen(
+          key: const ValueKey('insight-intro'),
+          onClose: _back,
+          onViewInsights: () => _go(BreesStep.insights),
+        ),
+      BreesStep.insights => InsightsScreen(
+          key: const ValueKey('insights'),
+          onHome: () => _goRoot(BreesStep.homeCompact),
+          onBudget: _openBudget,
+          onProfile: _openProfile,
+          onOpenReport: () => _go(BreesStep.reportExpense),
+        ),
+      BreesStep.reportExpense => FinancialReportScreen(
+          key: const ValueKey('report-expense'),
+          kind: FinancialReportKind.expense,
+          onNext: () => _go(BreesStep.reportIncome),
+        ),
+      BreesStep.reportIncome => FinancialReportScreen(
+          key: const ValueKey('report-income'),
+          kind: FinancialReportKind.income,
+          onNext: () => _go(BreesStep.reportBudget),
+        ),
+      BreesStep.reportBudget => FinancialReportScreen(
+          key: const ValueKey('report-budget'),
+          kind: FinancialReportKind.budget,
+          onNext: () => _go(BreesStep.reportQuote),
+        ),
+      BreesStep.reportQuote => FinancialReportScreen(
+          key: const ValueKey('report-quote'),
+          kind: FinancialReportKind.quote,
+          onNext: () => _goRoot(BreesStep.insights),
+        ),
+      BreesStep.profile => ProfileScreen(
+          key: const ValueKey('profile'),
+          onHome: () => _goRoot(BreesStep.homeCompact),
+          onBudget: _openBudget,
+          onInsights: _openInsights,
+          onEditProfile: () => _go(BreesStep.editProfile),
+          onSettings: () => _go(BreesStep.settings),
+          onHelpCenter: () => _go(BreesStep.helpCenter),
+        ),
+      BreesStep.editProfile => EditProfileScreen(
+          key: const ValueKey('edit-profile'),
+          onBack: _back,
+          onSave: _back,
+        ),
+      BreesStep.settings => SettingsScreen(
+          key: const ValueKey('settings'),
+          onBack: _back,
+          onPassword: () => _go(BreesStep.passwordSettings),
+          onNotifications: () => _go(BreesStep.notificationSettings),
+        ),
+      BreesStep.passwordSettings => PasswordSettingsScreen(
+          key: const ValueKey('password-settings'),
+          onBack: _back,
+          onSave: _back,
+        ),
+      BreesStep.notificationSettings => NotificationSettingsScreen(
+          key: const ValueKey('notification-settings'),
+          onBack: _back,
+        ),
+      BreesStep.helpCenter => HelpCenterScreen(
+          key: const ValueKey('help-center'),
+          onBack: _back,
+          onTopic: () => _go(BreesStep.helpTopic),
+        ),
+      BreesStep.helpTopic => HelpCenterTopicScreen(
+          key: const ValueKey('help-topic'),
+          onBack: _back,
+        ),
+      BreesStep.homeLoading => HomeLoadingScreen(
+          key: const ValueKey('home-loading'),
+          onFinished: () => _goRoot(BreesStep.homeCompact),
+          onHome: () => _goRoot(BreesStep.homeCompact),
+          onBudget: _openBudget,
           onInsights: _openInsights,
           onProfile: _openProfile,
         ),

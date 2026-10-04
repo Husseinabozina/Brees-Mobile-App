@@ -49,6 +49,20 @@ void main() {
     BreesStep.budgetDetailEmpty,
     BreesStep.budgetDetailInUse,
     BreesStep.budgetList,
+    BreesStep.insightIntro,
+    BreesStep.insights,
+    BreesStep.reportExpense,
+    BreesStep.reportIncome,
+    BreesStep.reportBudget,
+    BreesStep.reportQuote,
+    BreesStep.profile,
+    BreesStep.editProfile,
+    BreesStep.settings,
+    BreesStep.passwordSettings,
+    BreesStep.notificationSettings,
+    BreesStep.helpCenter,
+    BreesStep.helpTopic,
+    BreesStep.homeLoading,
   ];
 
   for (final step in regressionSteps) {
@@ -180,4 +194,59 @@ void main() {
 
     expectNoFlutterException(tester, 'interaction must not produce a Flutter exception');
   });
+
+  testWidgets('insights report story traverses all four report screens', (tester) async {
+    await pumpStep(tester, BreesStep.insightIntro);
+
+    expect(find.text('Get your insights'), findsOneWidget);
+    await tester.tap(find.text('View Insights'));
+    await tester.pump(const Duration(milliseconds: 350));
+
+    expect(find.text('Recent updates'), findsOneWidget);
+    await tester.tap(find.text('Brees'));
+    await tester.pump(const Duration(milliseconds: 350));
+
+    expect(find.text('You Spend 💸'), findsOneWidget);
+    await tester.tapAt(const Offset(180, 400));
+    await tester.pump(const Duration(milliseconds: 350));
+    expect(find.text('You Earned 💰'), findsOneWidget);
+
+    await tester.tapAt(const Offset(180, 400));
+    await tester.pump(const Duration(milliseconds: 350));
+    expect(find.text('2 of 12 Budget is\nexceeds the limit'), findsOneWidget);
+
+    await tester.tapAt(const Offset(180, 400));
+    await tester.pump(const Duration(milliseconds: 350));
+    expect(find.textContaining('Financial freedom'), findsOneWidget);
+
+    expectNoFlutterException(
+      tester,
+      'insight report story must not produce a Flutter exception',
+    );
+  });
+
+  testWidgets('profile settings and help center actions navigate', (tester) async {
+    await pumpStep(tester, BreesStep.profile);
+
+    expect(find.text('Donye Collins'), findsOneWidget);
+    await tester.tap(find.text('Settings'));
+    await tester.pump(const Duration(milliseconds: 350));
+    expect(find.text('Reset Password'), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pump(const Duration(milliseconds: 350));
+    await tester.tap(find.text('Help Center'));
+    await tester.pump(const Duration(milliseconds: 350));
+
+    expect(find.text('Have a burning Question?'), findsOneWidget);
+    await tester.tap(find.text('How to add bank account to Brees?').first);
+    await tester.pump(const Duration(milliseconds: 350));
+    expect(find.text('Topic details'), findsOneWidget);
+
+    expectNoFlutterException(
+      tester,
+      'profile and help center flow must not produce a Flutter exception',
+    );
+  });
+
 }

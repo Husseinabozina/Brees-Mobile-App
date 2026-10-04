@@ -2,7 +2,7 @@
 
 Source file: **Brees Fintech App UI Kit**
 
-The app now implements the first **46 visual screens/states** in canvas order. Screens 2–4 are the three pages inside the Flutter onboarding `PageView`.
+The app now implements **all 60 visual screens/states** currently exposed in the Brees UI page, in canvas order. Screens 2–4 are the three pages inside the Flutter onboarding `PageView`.
 
 ## First 6
 
@@ -59,6 +59,23 @@ The app now implements the first **46 visual screens/states** in canvas order. S
 45. `3:5509` — Budget detail / in use
 46. `3:5618` — Budget list / populated
 
+## Batch 4 — screens 47–60
+
+47. `3:5770` — Insights intro modal
+48. `3:6026` — Insights list
+49. `3:6180` — Financial report / expense
+50. `3:6230` — Financial report / income
+51. `3:6281` — Financial report / budget
+52. `3:6333` — Financial report / quote
+53. `3:6370` — Profile
+54. `3:6442` — Edit profile
+55. `3:6485` — Settings
+56. `3:6518` — Password settings
+57. `3:6553` — Notification settings
+58. `3:6575` — Help Center
+59. `3:6701` — Help Center topic details
+60. `3:6731` — Home loading state
+
 ## Interaction and navigation contract
 
 BreesFlow maintains an explicit in-app history stack and uses `PopScope`, so Android system back and visible back controls resolve through the same state history instead of closing the single Flutter route.
@@ -86,6 +103,6 @@ External-app states (Gmail and Chrome) live under `features/system_preview` so t
 
 ## Motion
 
-The implementation includes staggered guide-card reveal, envelope entrance, Chrome slide/fade, floating rocket motion, password/checkbox interactions, dashboard transitions, transaction-category approve/reject feedback, search/filter interactions, and budget-creation state changes.
+The implementation includes staggered guide-card reveal, envelope entrance, Chrome slide/fade, floating rocket motion, password/checkbox interactions, dashboard transitions, transaction-category approve/reject feedback, search/filter interactions, budget-creation state changes, insight-story transitions, profile/settings interactions, and a timed animated home-loading state.
 
 The original Figma screenshots remain reference targets only. Screen UI is built with Flutter widgets; extracted Figma illustration/logo nodes are local assets under `assets/images/`.
