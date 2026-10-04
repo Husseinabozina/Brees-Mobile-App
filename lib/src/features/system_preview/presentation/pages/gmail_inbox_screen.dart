@@ -33,22 +33,24 @@ class GmailInboxScreen extends StatelessWidget {
             const Positioned(
               left: 0,
               right: 0,
-              top: 34,
-              height: 82,
+              top: 44,
+              height: 91,
               child: _MailRow(
                 avatarText: 'FC',
+                avatarAsset: 'assets/images/gmail_fortune_avatar.png',
                 title: 'Fortune Company co.',
                 subject: 'Important Files!',
                 preview: 'Make sure you receive these.',
                 time: '11:27 pm',
                 starred: true,
+                attachments: true,
               ),
             ),
             const Positioned(
               left: 0,
               right: 0,
-              top: 116,
-              height: 56,
+              top: 158,
+              height: 44,
               child: _CategoryRow(
                 icon: Icons.people_outline_rounded,
                 title: 'Social',
@@ -60,8 +62,8 @@ class GmailInboxScreen extends StatelessWidget {
             const Positioned(
               left: 0,
               right: 0,
-              top: 172,
-              height: 56,
+              top: 214,
+              height: 40,
               child: _CategoryRow(
                 icon: Icons.sell_outlined,
                 title: 'Promotions',
@@ -73,8 +75,8 @@ class GmailInboxScreen extends StatelessWidget {
             Positioned(
               left: 0,
               right: 0,
-              top: 228,
-              height: 82,
+              top: 268,
+              height: 59,
               child: _MailRow(
                 avatarText: 'Br',
                 title: 'Brees:  Forgot password',
@@ -88,8 +90,8 @@ class GmailInboxScreen extends StatelessWidget {
             const Positioned(
               left: 0,
               right: 0,
-              top: 310,
-              height: 82,
+              top: 359,
+              height: 59,
               child: _MailRow(
                 avatarText: 'R',
                 title: 'Random Bank Online',
@@ -102,10 +104,11 @@ class GmailInboxScreen extends StatelessWidget {
             const Positioned(
               left: 0,
               right: 0,
-              top: 392,
-              height: 82,
+              top: 450,
+              height: 59,
               child: _MailRow(
                 avatarText: 'TG',
+                avatarAsset: 'assets/images/gmail_taylor_avatar.png',
                 title: 'Taylor Grey',
                 subject: 'Timesheet nextweek?',
                 preview: 'Hey what was our timesheet that was for..',
@@ -117,10 +120,11 @@ class GmailInboxScreen extends StatelessWidget {
             const Positioned(
               left: 0,
               right: 0,
-              top: 474,
-              height: 82,
+              top: 541,
+              height: 59,
               child: _MailRow(
                 avatarText: 'U',
+                avatarAsset: 'assets/images/gmail_unique_avatar.png',
                 title: 'UniqueYou by SecretKissShop',
                 subject: 'Learn new Tricks',
                 preview: 'Now is great time to shop great new fash..',
@@ -158,51 +162,52 @@ class _CategoryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final compact = subtitle.isEmpty;
     return Stack(
       children: [
         Positioned(
-          left: 18,
-          top: 17,
-          child: Icon(icon, color: badgeColor, size: 22),
+          left: 20,
+          top: compact ? 4 : 13,
+          child: Icon(icon, color: badgeColor, size: 20),
         ),
         Positioned(
-          left: 68,
-          right: 86,
-          top: subtitle.isEmpty ? 19 : 8,
+          left: 66,
+          right: 90,
+          top: compact ? 0 : 0,
           child: Text(
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 16,
-              height: 20 / 16,
+              height: 22 / 16,
               fontWeight: FontWeight.w700,
             ),
           ),
         ),
-        if (subtitle.isNotEmpty)
+        if (!compact)
           Positioned(
-            left: 68,
-            right: 86,
-            top: 31,
+            left: 66,
+            right: 90,
+            top: 22,
             child: Text(
               subtitle,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 14,
-                height: 18 / 14,
+                height: 19 / 14,
                 color: Color(0xFF606267),
               ),
             ),
           ),
         Positioned(
           right: 14,
-          top: 14,
+          top: compact ? 0 : 9,
           child: Container(
-            height: 28,
+            height: 22,
             alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 7),
             decoration: BoxDecoration(
               color: badgeColor,
               borderRadius: BorderRadius.circular(50),
@@ -212,7 +217,7 @@ class _CategoryRow extends StatelessWidget {
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 13,
-                height: 16 / 13,
+                height: 15 / 13,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -230,18 +235,22 @@ class _MailRow extends StatelessWidget {
     required this.subject,
     required this.preview,
     required this.time,
+    this.avatarAsset,
     this.avatarColor = const Color(0xFFE7EEF8),
     this.starred = false,
+    this.attachments = false,
     this.onTap,
   });
 
   final String avatarText;
+  final String? avatarAsset;
   final String title;
   final String subject;
   final String preview;
   final String time;
   final Color avatarColor;
   final bool starred;
+  final bool attachments;
   final VoidCallback? onTap;
 
   @override
@@ -253,33 +262,38 @@ class _MailRow extends StatelessWidget {
         children: [
           Positioned(
             left: 12,
-            top: 22,
-            width: 38,
-            height: 38,
-            child: CircleAvatar(
-              radius: 19,
-              backgroundColor: avatarColor,
-              child: Text(
-                avatarText,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  height: 20 / 16,
-                ),
-              ),
-            ),
+            top: 1,
+            width: 37,
+            height: 37,
+            child: avatarAsset == null
+                ? CircleAvatar(
+                    radius: 18.5,
+                    backgroundColor: avatarColor,
+                    child: Text(
+                      avatarText,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        height: 20 / 16,
+                      ),
+                    ),
+                  )
+                : ClipOval(
+                    child: Image.asset(avatarAsset!, fit: BoxFit.cover),
+                  ),
           ),
           Positioned(
             left: 66,
             right: 67,
-            top: 8,
+            top: 0,
             child: Text(
               title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
+                color: Color(0xFF303030),
                 fontSize: 16,
-                height: 20 / 16,
+                height: 22 / 16,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -287,42 +301,44 @@ class _MailRow extends StatelessWidget {
           Positioned(
             left: 66,
             right: 67,
-            top: 31,
+            top: 23,
             child: Text(
               subject,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
+                color: Color(0xFF303030),
                 fontSize: 14,
-                height: 18 / 14,
-                fontWeight: FontWeight.w500,
+                height: 16 / 14,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
           Positioned(
             left: 66,
             right: 67,
-            top: 52,
+            top: 43,
             child: Text(
               preview,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 14,
-                height: 18 / 14,
+                height: 16 / 14,
                 color: Color(0xFF5D5C5D),
               ),
             ),
           ),
           Positioned(
-            right: 12,
-            top: 10,
-            width: 48,
+            right: 10,
+            top: 5,
+            width: 52,
             child: Text(
               time,
               maxLines: 1,
               textAlign: TextAlign.right,
               style: const TextStyle(
+                color: Color(0xFF303030),
                 fontSize: 11,
                 height: 14 / 11,
                 fontWeight: FontWeight.w600,
@@ -330,12 +346,57 @@ class _MailRow extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 18,
-            top: 41,
+            right: 14,
+            top: 33,
             child: Icon(
               starred ? Icons.star_rounded : Icons.star_border_rounded,
               color: starred ? const Color(0xFFFFC107) : const Color(0xFFADB3BA),
               size: 22,
+            ),
+          ),
+          if (attachments)
+            const Positioned(
+              left: 66,
+              top: 67,
+              child: Row(
+                children: [
+                  _AttachmentChip(color: Color(0xFF4285F4)),
+                  SizedBox(width: 8),
+                  _AttachmentChip(color: Color(0xFFEA4335)),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AttachmentChip extends StatelessWidget {
+  const _AttachmentChip({required this.color});
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 90,
+      height: 24,
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color(0xFFC8C8C8)),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.insert_drive_file_rounded, size: 16, color: color),
+          const SizedBox(width: 3),
+          const Text(
+            'filename',
+            style: TextStyle(
+              color: Color(0xFF666666),
+              fontSize: 14,
+              height: 16 / 14,
             ),
           ),
         ],

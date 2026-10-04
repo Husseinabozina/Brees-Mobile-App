@@ -48,7 +48,6 @@ class GmailShell extends StatelessWidget {
               top: 61,
               height: 46,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -59,11 +58,20 @@ class GmailShell extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const Row(
+                child: Stack(
                   children: [
-                    Icon(Icons.menu_rounded, color: Color(0xFF5F6368)),
-                    SizedBox(width: 12),
-                    Expanded(
+                    const Positioned(
+                      left: 14,
+                      top: 11,
+                      child: Icon(
+                        Icons.menu_rounded,
+                        color: Color(0xFF5F6368),
+                        size: 22,
+                      ),
+                    ),
+                    const Positioned(
+                      left: 47,
+                      top: 12,
                       child: Text(
                         'Search in mail',
                         style: TextStyle(
@@ -72,10 +80,17 @@ class GmailShell extends StatelessWidget {
                         ),
                       ),
                     ),
-                    CircleAvatar(
-                      radius: 14,
-                      backgroundColor: Color(0xFFD7D7D7),
-                      child: Icon(Icons.person, size: 18),
+                    Positioned(
+                      right: 12,
+                      top: 8,
+                      width: 28,
+                      height: 28,
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/images/gmail_profile_avatar.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ],
                 ),
