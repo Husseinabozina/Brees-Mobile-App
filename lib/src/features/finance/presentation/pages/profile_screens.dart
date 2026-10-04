@@ -1252,7 +1252,7 @@ class _HomeLoadingScreenState extends State<HomeLoadingScreen>
               child: RotationTransition(
                 turns: _controller,
                 child: const Icon(
-                  Icons.progress_activity_rounded,
+                  Icons.autorenew_rounded,
                   color: Color(0xFFAFA5FF),
                   size: 44,
                 ),
