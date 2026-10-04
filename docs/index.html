@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#2C14DD" />
+  <meta name="description" content="Brees — a portfolio-grade Flutter personal-finance experience with clean architecture, motion, automated testing and visual QA." />
+  <title>Brees | Flutter Fintech Portfolio</title>
+  <link rel="icon" href="assets/brees-mark.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Brees home">
+      <img src="assets/brees-mark.svg" alt="" width="44" height="44" />
+      <span>Brees</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#experience">Experience</a>
+      <a href="#screens">Screens</a>
+      <a href="#engineering">Engineering</a>
+      <a href="#download">Download</a>
+    </nav>
+    <a class="header-cta" href="https://github.com/Husseinabozina/Brees-Mobile-App">View code</a>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow">FLUTTER FINTECH CASE STUDY</p>
+        <h1>Your finances.<br><em>One clear view.</em></h1>
+        <p class="hero-text">A complete personal-finance experience rebuilt in Flutter from a Figma Community design system — with real navigation, motion, state, testing, and production-style architecture.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#screens">Explore the app</a>
+          <a class="button secondary" href="https://github.com/Husseinabozina/Brees-Mobile-App">View on GitHub</a>
+        </div>
+        <div class="hero-meta">
+          <span>60 visual states</span><i></i><span>Flutter</span><i></i><span>Clean Architecture</span>
+        </div>
+      </div>
+      <div class="hero-stage">
+        <span class="glow glow-a"></span>
+        <span class="glow glow-b"></span>
+        <div class="phone phone-main"><img src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/home_dashboard.png" alt="Brees finance dashboard" /></div>
+        <div class="phone phone-side"><img src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/budgets.png" alt="Brees budgets screen" /></div>
+        <div class="floating-chip"><strong>60</strong><span>screen states</span></div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="wrap stats-grid">
+        <div><strong>60</strong><span>visual states implemented</span></div>
+        <div><strong>375×812</strong><span>design QA viewport</span></div>
+        <div><strong>CI</strong><span>automated tests + visual QA</span></div>
+        <div><strong>Flutter</strong><span>real widgets, not screenshots</span></div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="experience">
+      <div class="section-heading">
+        <p class="eyebrow">PRODUCT JOURNEY</p>
+        <h2>A connected experience, not isolated mockups.</h2>
+        <p>From the first launch to budgets, transactions, financial insights, and account settings, each state is wired into a navigable Flutter experience.</p>
+      </div>
+      <div class="feature-grid">
+        <article><span>01</span><h3>Start with clarity</h3><p>Launch, onboarding, guided setup, sign-up and recovery flows.</p></article>
+        <article><span>02</span><h3>Understand the money</h3><p>Balances, linked accounts, activity and transaction detail.</p></article>
+        <article><span>03</span><h3>Plan ahead</h3><p>Budget onboarding, configuration, preview, success and active states.</p></article>
+        <article><span>04</span><h3>See the story</h3><p>Insight cards and a multi-step financial report experience.</p></article>
+      </div>
+    </section>
+
+    <section class="screen-section" id="screens">
+      <div class="wrap">
+        <div class="section-heading light">
+          <p class="eyebrow">REAL FLUTTER CAPTURES</p>
+          <h2>Inside Brees.</h2>
+          <p>The gallery uses screenshots captured from the running Flutter implementation.</p>
+        </div>
+        <div class="screen-grid">
+          <button class="screen-card tall" data-src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/onboarding.png" data-title="Onboarding"><img src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/onboarding.png" alt="Onboarding" /></button>
+          <button class="screen-card" data-src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/sign_up.png" data-title="Sign up"><img src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/sign_up.png" alt="Sign up" /></button>
+          <button class="screen-card featured" data-src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/home_dashboard.png" data-title="Dashboard"><img src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/home_dashboard.png" alt="Dashboard" /></button>
+          <button class="screen-card" data-src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/account_details.png" data-title="Account details"><img src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/account_details.png" alt="Account details" /></button>
+          <button class="screen-card" data-src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/budgets.png" data-title="Budgets"><img src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/budgets.png" alt="Budgets" /></button>
+          <button class="screen-card tall" data-src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/insights.png" data-title="Insights"><img src="https://raw.githubusercontent.com/Husseinabozina/Brees-Mobile-App/main/screenshots/insights.png" alt="Insights" /></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap engineering" id="engineering">
+      <div class="section-heading">
+        <p class="eyebrow">ENGINEERING</p>
+        <h2>Designed to be reviewed, extended, and tested.</h2>
+      </div>
+      <div class="engineering-grid">
+        <article><h3>Clean boundaries</h3><p>Presentation, use cases, repository contracts, data sources, and transport are separated so product UI stays decoupled from infrastructure.</p></article>
+        <article><h3>Visual regression</h3><p>A 60-state harness captures the Flutter runtime at the target design viewport and compares it against stored design references.</p></article>
+        <article><h3>Continuous integration</h3><p>GitHub Actions runs analysis, tests, visual QA, artifact upload, and curated portfolio screenshot refresh.</p></article>
+      </div>
+    </section>
+
+    <section class="download" id="download">
+      <div class="wrap download-inner">
+        <img src="assets/brees-mark.svg" alt="" width="78" height="78" />
+        <div>
+          <p class="eyebrow">TRY THE PROJECT</p>
+          <h2>Run it locally or grab the Android build.</h2>
+          <p>The public presentation stays connected to the source repository and its release builds.</p>
+        </div>
+        <div class="download-actions">
+          <a class="button download-button" href="https://github.com/Husseinabozina/Brees-Mobile-App/releases">Android releases</a>
+          <a class="text-link" href="https://github.com/Husseinabozina/Brees-Mobile-App">Source code →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <a class="brand" href="#home"><img src="assets/brees-mark.svg" alt="" width="38" height="38" /><span>Brees</span></a>
+      <p>Independent Flutter implementation based on the Brees Figma Community UI kit.</p>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" aria-label="Screenshot preview">
+    <button type="button" class="close" aria-label="Close">×</button>
+    <img src="" alt="" />
+    <p></p>
+  </dialog>
+</body>
+</html>
