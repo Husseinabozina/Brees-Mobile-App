@@ -100,6 +100,20 @@ void main() {
     expectNoFlutterException(tester, 'interaction must not produce a Flutter exception');
   });
 
+  testWidgets('sign up login action opens login instead of submitting registration', (tester) async {
+    await pumpStep(tester, BreesStep.signUp);
+
+    expect(find.byKey(const Key('signup-login')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('signup-login')));
+    await tester.pump(const Duration(milliseconds: 350));
+
+    expect(find.text('Welcome back'), findsOneWidget);
+    expectNoFlutterException(
+      tester,
+      'sign up login interaction must not produce a Flutter exception',
+    );
+  });
+
   testWidgets('login register action now navigates', (tester) async {
     await pumpStep(tester, BreesStep.login);
 
