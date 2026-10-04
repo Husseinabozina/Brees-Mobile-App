@@ -200,7 +200,7 @@ void main() {
 
     expect(find.text('Get your insights'), findsOneWidget);
     await tester.tap(find.text('View Insights'));
-    await tester.pump(const Duration(milliseconds: 350));
+    await tester.pumpAndSettle();
 
     expect(find.text('Recent updates'), findsOneWidget);
     await tester.tap(find.text('Brees'));
