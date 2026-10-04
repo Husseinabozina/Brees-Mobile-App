@@ -586,7 +586,7 @@ class HomeSearchScreen extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4A2DF0),
+                  color: const Color(0xFF432DEC),
                   border: Border.all(color: const Color(0xFFC9C0FF)),
                   borderRadius: BorderRadius.circular(32),
                 ),
@@ -651,6 +651,13 @@ class HomeSearchScreen extends StatelessWidget {
                 ],
               ),
             ),
+            const Positioned(
+              left: 0,
+              right: 0,
+              top: 357,
+              bottom: 0,
+              child: ColoredBox(color: Color(0xFF211694)),
+            ),
             Positioned(
               left: 20,
               top: 357,
@@ -663,7 +670,7 @@ class HomeSearchScreen extends StatelessWidget {
                 child: Stack(
                   children: [
                     const ColoredBox(
-                      color: Color(0xFF27169D),
+                      color: Color(0xFF1B1371),
                       child: SizedBox.expand(),
                     ),
                     Positioned.fill(
@@ -713,7 +720,7 @@ class HomeSearchScreen extends StatelessWidget {
               height: 89,
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF25169A),
+                  color: const Color(0xFF1F1773),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: const Stack(
@@ -785,7 +792,7 @@ class HomeSearchScreen extends StatelessWidget {
               height: 230,
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF3020B1),
+                  color: const Color(0xFF2F259D),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: const Stack(
