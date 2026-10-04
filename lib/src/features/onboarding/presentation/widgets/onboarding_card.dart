@@ -38,42 +38,73 @@ class OnboardingCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
+      child: Stack(
         children: [
-          SizedBox(
-            height: 137,
-            child: Column(
-              children: [
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: BreesColors.navy,
-                    fontSize: 24,
-                    height: 1.2,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  description,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: BreesColors.navy.withValues(alpha: 0.8),
-                    fontSize: 14,
-                    height: 1.5,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
+          Positioned(
+            left: 0,
+            top: 0,
+            width: 287,
+            height: 58,
+            child: _ScaleDownText(
+              title,
+              style: const TextStyle(
+                color: BreesColors.navy,
+                fontSize: 24,
+                height: 1.2,
+                fontWeight: FontWeight.w700,
+                letterSpacing: -0.5,
+              ),
             ),
           ),
-          const Spacer(),
-          OnboardingIndicator(index: index),
-          const SizedBox(height: 32),
-          BreesButton(label: buttonLabel, onPressed: onPressed),
+          Positioned(
+            left: 0,
+            top: 74,
+            width: 287,
+            height: 63,
+            child: _ScaleDownText(
+              description,
+              style: TextStyle(
+                color: BreesColors.navy.withValues(alpha: 0.8),
+                fontSize: 14,
+                height: 1.5,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          Positioned(
+            left: 123.5,
+            top: 161,
+            child: OnboardingIndicator(index: index),
+          ),
+          Positioned(
+            left: 40,
+            top: 215,
+            child: BreesButton(label: buttonLabel, onPressed: onPressed),
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class _ScaleDownText extends StatelessWidget {
+  const _ScaleDownText(this.text, {required this.style});
+
+  final String text;
+  final TextStyle style;
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.center,
+      child: SizedBox(
+        width: 287,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: style,
+        ),
       ),
     );
   }
