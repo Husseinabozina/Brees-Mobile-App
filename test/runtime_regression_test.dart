@@ -202,8 +202,20 @@ void main() {
     await tester.tap(find.text('View Insights'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Recent updates'), findsOneWidget);
-    await tester.tap(find.text('Brees'));
+    final insightsScreen = find.byKey(const ValueKey('insights'));
+    expect(
+      find.descendant(
+        of: insightsScreen,
+        matching: find.text('Recent updates'),
+      ),
+      findsOneWidget,
+    );
+    await tester.tap(
+      find.descendant(
+        of: insightsScreen,
+        matching: find.text('Brees'),
+      ),
+    );
     await tester.pump(const Duration(milliseconds: 350));
 
     expect(find.text('You Spend 💸'), findsOneWidget);
