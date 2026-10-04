@@ -11,10 +11,12 @@ class InsightIntroScreen extends StatelessWidget {
     super.key,
     required this.onClose,
     required this.onViewInsights,
+    this.background,
   });
 
   final VoidCallback onClose;
   final VoidCallback onViewInsights;
+  final Widget? background;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +24,14 @@ class InsightIntroScreen extends StatelessWidget {
       background: const Color(0xFF706C87),
       child: Stack(
         children: [
-          const ColoredBox(color: Color(0xFF8B879B)),
+          if (background != null)
+            Positioned.fill(
+              child: IgnorePointer(child: background!),
+            )
+          else
+            const ColoredBox(color: Color(0xFF8B879B)),
           Positioned.fill(
-            child: ColoredBox(color: Colors.black.withValues(alpha: .34)),
+            child: ColoredBox(color: Colors.black.withValues(alpha: .44)),
           ),
           Positioned(
             left: 23,
@@ -35,6 +42,13 @@ class InsightIntroScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: BreesColors.primary,
                 borderRadius: BorderRadius.circular(26),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x33000000),
+                    blurRadius: 30,
+                    offset: Offset(0, 18),
+                  ),
+                ],
               ),
               child: Stack(
                 children: [
