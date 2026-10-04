@@ -684,20 +684,3 @@ class _SearchSuggestion extends StatelessWidget {
     );
   }
 }
-
-class _DimBalance extends StatelessWidget {
-  const _DimBalance({required this.name, required this.amount});
-  final String name;
-  final String amount;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(name, style: const TextStyle(color: Color(0xFF9A91D8), fontSize: 12)),
-        const Spacer(),
-        Text(amount, style: const TextStyle(color: Color(0xFFB1A8EC), fontSize: 12)),
-      ],
-    );
-  }
-}
