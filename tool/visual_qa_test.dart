@@ -119,7 +119,7 @@ void main() {
 
     final root = Directory('build/visual_qa');
     final runtime = Directory('${root.path}/runtime');
-    await runtime.create(recursive: true);
+    runtime.createSync(recursive: true);
 
     final rows = <String>[
       'screen,node,step,similarity,mae,changed_pixel_ratio,width,height',
@@ -144,32 +144,39 @@ void main() {
         final boundary = tester.renderObject<RenderRepaintBoundary>(
           boundaryFinder,
         );
-        final actualImage = await boundary.toImage(pixelRatio: 1);
-        final actualPng = await actualImage.toByteData(
-          format: ui.ImageByteFormat.png,
-        );
-        if (actualPng == null) {
-          throw StateError('Could not encode runtime screenshot.');
+
+        final metrics = await tester.runAsync<_Metrics>(() async {
+          final actualImage = await boundary.toImage(pixelRatio: 1);
+          final actualPng = await actualImage.toByteData(
+            format: ui.ImageByteFormat.png,
+          );
+          if (actualPng == null) {
+            throw StateError('Could not encode runtime screenshot.');
+          }
+
+          final runtimeFile = File(
+            '${runtime.path}/${visualCase.fileStem}.png',
+          );
+          runtimeFile.writeAsBytesSync(
+            actualPng.buffer.asUint8List(),
+            flush: true,
+          );
+
+          final referenceBytes = File(
+            visualCase.referencePath,
+          ).readAsBytesSync();
+          final referenceImage = await _decodeImage(
+            referenceBytes,
+            targetWidth: actualImage.width,
+            targetHeight: actualImage.height,
+          );
+
+          return _compareImages(actualImage, referenceImage);
+        });
+
+        if (metrics == null) {
+          throw StateError('Visual QA capture returned no metrics.');
         }
-
-        final runtimeFile = File(
-          '${runtime.path}/${visualCase.fileStem}.png',
-        );
-        await runtimeFile.writeAsBytes(
-          actualPng.buffer.asUint8List(),
-          flush: true,
-        );
-
-        final referenceBytes = await File(
-          visualCase.referencePath,
-        ).readAsBytes();
-        final referenceImage = await _decodeImage(
-          referenceBytes,
-          targetWidth: actualImage.width,
-          targetHeight: actualImage.height,
-        );
-
-        final metrics = await _compareImages(actualImage, referenceImage);
         metricsByCase.add((visualCase, metrics));
 
         rows.add([
@@ -205,7 +212,7 @@ void main() {
       }
     }
 
-    await File('${root.path}/report.csv').writeAsString(
+    File('${root.path}/report.csv').writeAsStringSync(
       '${rows.join('\n')}\n',
       flush: true,
     );
@@ -242,7 +249,7 @@ void main() {
       }
     }
 
-    await File('${root.path}/report.md').writeAsString(
+    File('${root.path}/report.md').writeAsStringSync(
       markdown.toString(),
       flush: true,
     );
