@@ -39,16 +39,21 @@ class AccountDetailScreen extends StatelessWidget {
               left: 126.5,
               top: 120,
               width: 122,
-              child: Column(
+              height: 83,
+              child: Stack(
+                alignment: Alignment.topCenter,
                 children: [
                   Image.asset(account.assetPath, width: 48, height: 48),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Kuda Bank',
-                    style: TextStyle(
-                      color: Color(0xFF111827),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                  const Positioned(
+                    top: 64,
+                    child: Text(
+                      'Kuda Bank',
+                      style: TextStyle(
+                        color: Color(0xFF111827),
+                        fontSize: 16,
+                        height: 19 / 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],
@@ -60,25 +65,54 @@ class AccountDetailScreen extends StatelessWidget {
               width: 335,
               height: 192,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: const Column(
+                child: const Stack(
                   children: [
-                    _InfoRow(label: 'Type of account', value: 'Savings'),
-                    SizedBox(height: 16),
-                    _InfoRow(label: 'Account No', value: '1234567890'),
-                    SizedBox(height: 16),
-                    _InfoRow(
-                      label: 'Avaliable Balance',
-                      value: 'N12,000.00',
-                      valueColor: Color(0xFF1B7A00),
-                      bold: true,
+                    Positioned(
+                      left: 16,
+                      right: 16,
+                      top: 24,
+                      height: 24,
+                      child: _InfoRow(
+                        label: 'Type of account',
+                        value: 'Savings',
+                      ),
                     ),
-                    SizedBox(height: 16),
-                    _InfoRow(label: 'Date added', value: '15/05/20, 10:03 AM'),
+                    Positioned(
+                      left: 16,
+                      right: 16,
+                      top: 64,
+                      height: 24,
+                      child: _InfoRow(
+                        label: 'Account No',
+                        value: '1234567890',
+                      ),
+                    ),
+                    Positioned(
+                      left: 16,
+                      right: 16,
+                      top: 104,
+                      height: 24,
+                      child: _InfoRow(
+                        label: 'Avaliable Balance',
+                        value: 'N12,000.00',
+                        valueColor: Color(0xFF1B7A00),
+                        bold: true,
+                      ),
+                    ),
+                    Positioned(
+                      left: 16,
+                      right: 16,
+                      top: 144,
+                      height: 24,
+                      child: _InfoRow(
+                        label: 'Date added',
+                        value: '15/05/20, 10:03 AM',
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -89,82 +123,47 @@ class AccountDetailScreen extends StatelessWidget {
               width: 335,
               height: 293,
               child: Container(
-                padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Column(
+                child: Stack(
                   children: [
-                    const Row(
-                      children: [
-                        Text(
-                          'Recent Transactions',
-                          style: TextStyle(
-                            color: Color(0xFF444444),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                    const Positioned(
+                      left: 16,
+                      right: 16,
+                      top: 17,
+                      height: 24,
+                      child: Row(
+                        children: [
+                          Text(
+                            'Recent Transactions',
+                            style: TextStyle(
+                              color: Color(0xFF444444),
+                              fontSize: 12,
+                              height: 16 / 12,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
-                        Spacer(),
-                        CircleAvatar(
-                          radius: 11,
-                          backgroundColor: Color(0xFFF8F8F8),
-                          child: Icon(Icons.chevron_right_rounded, size: 18),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    ...snapshot.transactions.map(
-                      (t) => Padding(
-                        padding: const EdgeInsets.only(bottom: 13),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 19,
-                              backgroundColor: const Color(0xFFF1F5FC),
-                              child: Text(
-                                t.initial,
-                                style: const TextStyle(color: BreesColors.primary),
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    t.title,
-                                    style: const TextStyle(
-                                      color: Color(0xFF111827),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Text(
-                                    t.subtitle,
-                                    style: const TextStyle(
-                                      color: Color(0xFF9197A3),
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              t.amountLabel,
-                              style: TextStyle(
-                                color: t.isIncome
-                                    ? const Color(0xFF1B7A00)
-                                    : const Color(0xFF050D2A),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
+                          Spacer(),
+                          CircleAvatar(
+                            radius: 11,
+                            backgroundColor: Color(0xFFF8F8F8),
+                            child: Icon(Icons.chevron_right_rounded, size: 18),
+                          ),
+                        ],
                       ),
                     ),
+                    ...List.generate(snapshot.transactions.length, (index) {
+                      final transaction = snapshot.transactions[index];
+                      return Positioned(
+                        left: 16,
+                        right: 16,
+                        top: 55 + index * 53,
+                        height: 42,
+                        child: _TransactionRow(transaction: transaction),
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -198,21 +197,96 @@ class _InfoRow extends StatelessWidget {
           width: 145,
           child: Text(
             label,
+            maxLines: 1,
             style: const TextStyle(
               color: Color(0xFF6C727F),
               fontSize: 14,
+              height: 24 / 14,
             ),
           ),
         ),
         Expanded(
           child: Text(
             value,
+            maxLines: 1,
             textAlign: TextAlign.right,
             style: TextStyle(
               color: valueColor,
               fontSize: 14,
+              height: 24 / 14,
               fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
             ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TransactionRow extends StatelessWidget {
+  const _TransactionRow({required this.transaction});
+
+  final dynamic transaction;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 19,
+          backgroundColor: const Color(0xFFF1F5FC),
+          child: Text(
+            transaction.initial as String,
+            style: const TextStyle(color: BreesColors.primary),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 1,
+                right: 0,
+                child: Text(
+                  transaction.title as String,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Color(0xFF111827),
+                    fontSize: 14,
+                    height: 17 / 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 0,
+                top: 23,
+                right: 0,
+                child: Text(
+                  transaction.subtitle as String,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Color(0xFF9197A3),
+                    fontSize: 12,
+                    height: 15 / 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          transaction.amountLabel as String,
+          style: TextStyle(
+            color: transaction.isIncome as bool
+                ? const Color(0xFF1B7A00)
+                : const Color(0xFF050D2A),
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ],
