@@ -50,7 +50,6 @@ class _TransactionSortScreenState extends State<TransactionSortScreen> {
               width: 343,
               height: 186,
               child: Container(
-                padding: const EdgeInsets.fromLTRB(20, 18, 20, 14),
                 decoration: BoxDecoration(
                   color: BreesColors.canvas,
                   border: Border.all(color: BreesColors.primary, width: 1.4),
@@ -64,82 +63,103 @@ class _TransactionSortScreenState extends State<TransactionSortScreen> {
                     ),
                   ],
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: [
-                    const Text(
-                      'Transaction Details',
-                      style: TextStyle(
-                        color: Color(0xFF747A88),
-                        fontSize: 10,
+                    const Positioned(
+                      left: 20,
+                      top: 17,
+                      child: Text(
+                        'Transaction Details',
+                        style: TextStyle(
+                          color: Color(0xFF747A88),
+                          fontSize: 10,
+                          height: 12 / 10,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Image.asset(
-                          'assets/images/bank_kuda.png',
-                          width: 37,
-                          height: 37,
-                        ),
-                        const SizedBox(width: 10),
-                        const Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Kuda Bank',
-                                style: TextStyle(
-                                  color: Color(0xFF111827),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              Text(
-                                '2175836514',
-                                style: TextStyle(
-                                  color: Color(0xFF545B68),
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              'N12,000.00',
-                              style: TextStyle(color: Colors.red, fontSize: 14),
-                            ),
-                            SizedBox(height: 2),
-                            Text(
-                              'Sep 01 at 2:24 PM',
-                              style: TextStyle(
-                                color: Color(0xFF545B68),
-                                fontSize: 10,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                    Positioned(
+                      left: 20,
+                      top: 39,
+                      width: 37,
+                      height: 37,
+                      child: Image.asset('assets/images/bank_kuda.png'),
                     ),
-                    const SizedBox(height: 18),
-                    const Text(
-                      'Transaction Remark',
-                      style: TextStyle(
-                        color: Color(0xFF747A88),
-                        fontSize: 10,
+                    const Positioned(
+                      left: 67,
+                      top: 38,
+                      width: 130,
+                      child: Text(
+                        'Kuda Bank',
+                        style: TextStyle(
+                          color: Color(0xFF111827),
+                          fontSize: 14,
+                          height: 17 / 14,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    const Text(
-                      'Mc Loc Pos Prch-2134555666--Funds &\nElectronic T La Lang-',
-                      style: TextStyle(
-                        color: Color(0xFF24272D),
-                        fontSize: 14,
-                        height: 1.45,
-                        fontWeight: FontWeight.w600,
+                    const Positioned(
+                      left: 67,
+                      top: 59,
+                      child: Text(
+                        '2175836514',
+                        style: TextStyle(
+                          color: Color(0xFF545B68),
+                          fontSize: 10,
+                          height: 12 / 10,
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      right: 20,
+                      top: 38,
+                      child: Text(
+                        'N12,000.00',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 14,
+                          height: 17 / 14,
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      right: 20,
+                      top: 59,
+                      child: Text(
+                        'Sep 01 at 2:24 PM',
+                        style: TextStyle(
+                          color: Color(0xFF545B68),
+                          fontSize: 10,
+                          height: 12 / 10,
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 20,
+                      top: 104,
+                      child: Text(
+                        'Transaction Remark',
+                        style: TextStyle(
+                          color: Color(0xFF747A88),
+                          fontSize: 10,
+                          height: 12 / 10,
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 20,
+                      right: 20,
+                      top: 124,
+                      height: 45,
+                      child: Text(
+                        'Mc Loc Pos Prch-2134555666--Funds &\nElectronic T La Lang-',
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: Color(0xFF24272D),
+                          fontSize: 14,
+                          height: 20 / 14,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],
@@ -181,34 +201,35 @@ class _TransactionSortScreenState extends State<TransactionSortScreen> {
                       ),
                     ],
                   ),
-                  child: Column(
+                  child: const Stack(
                     children: [
-                      const SizedBox(height: 40),
-                      const CircleAvatar(
-                        radius: 24,
-                        backgroundColor: Color(0xFFFFEADD),
-                        child: Text('☎️', style: TextStyle(fontSize: 22)),
-                      ),
-                      const SizedBox(height: 14),
-                      const Text(
-                        'Utilities',
-                        style: TextStyle(
-                          color: Color(0xFF0E0646),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
+                      Positioned(
+                        left: 131.5,
+                        top: 41,
+                        child: CircleAvatar(
+                          radius: 24,
+                          backgroundColor: Color(0xFFFFEADD),
+                          child: Text('☎️', style: TextStyle(fontSize: 22)),
                         ),
                       ),
-                      const SizedBox(height: 30),
-                      const Wrap(
-                        spacing: 24,
-                        runSpacing: 24,
-                        children: [
-                          _Tag('Lawma'),
-                          _Tag('Power'),
-                          _Tag('Water'),
-                          _Tag('Rent'),
-                        ],
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: 106,
+                        child: Text(
+                          'Utilities',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF0E0646),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
+                      Positioned(left: 72, top: 167, child: _Tag('Lawma')),
+                      Positioned(left: 170, top: 167, child: _Tag('Power')),
+                      Positioned(left: 72, top: 225, child: _Tag('Water')),
+                      Positioned(left: 170, top: 225, child: _Tag('Rent')),
                     ],
                   ),
                 ),
