@@ -33,6 +33,11 @@ jobs:
           test -n "$MATERIAL_ICONS_PATH"
           echo "VISUAL_QA_MATERIAL_ICONS_PATH=$MATERIAL_ICONS_PATH" >> "$GITHUB_ENV"
 
+      - name: Generate Brees brand assets
+        run: |
+          python3 -m pip install --quiet pillow
+          python3 tool/generate_brand_assets.py --font /tmp/Inter.ttf
+
       - name: Run visual QA
         env:
           VISUAL_QA_FONT_PATH: /tmp/Inter.ttf
@@ -73,7 +78,18 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add screenshots docs/downloads
+          git add \
+            screenshots \
+            docs/downloads \
+            docs/assets/brees-logo.png \
+            docs/assets/brees-wordmark.png \
+            docs/assets/brees-app-icon.png \
+            android/app/src/main/res/drawable/ic_launcher_brees.png \
+            ios/Runner/Assets.xcassets/AppIcon.appiconset/Brees-AppIcon-1024.png \
+            macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_*.png \
+            web/favicon.png \
+            web/icons/Icon-*.png \
+            web/icons/Icon-maskable-*.png
 
           if git diff --cached --quiet; then
             echo "Portfolio assets are already current."
