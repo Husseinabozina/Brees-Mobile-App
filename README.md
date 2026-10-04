@@ -128,15 +128,21 @@ Today:
 final dependencies = BreesDependencies.mock();
 ```
 
-When a real backend is available, the intended migration is simply to implement `ApiClient` with the preferred networking package and inject it:
+When a real backend is available, the intended migration is simply to implement `ApiClient` with the preferred networking package and inject it at the app root:
 
 ```dart
 final dependencies = BreesDependencies.fromApiClient(
   RealApiClient(baseUrl: apiBaseUrl),
 );
+
+runApp(
+  BreesApp(dependencies: dependencies),
+);
 ```
 
 The screens, use cases, repository contracts, and presentation controllers do not need to know that the data source changed.
+
+A step-by-step migration guide is available in [docs/BACKEND_INTEGRATION.md](docs/BACKEND_INTEGRATION.md).
 
 ## Project structure
 
