@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/brees_colors.dart';
@@ -18,6 +20,7 @@ class _LaunchScreenState extends State<LaunchScreen>
   late final AnimationController _controller;
   late final Animation<double> _logoScale;
   late final Animation<double> _logoOpacity;
+  Timer? _advanceTimer;
 
   @override
   void initState() {
@@ -28,14 +31,14 @@ class _LaunchScreenState extends State<LaunchScreen>
     )..forward();
     _logoScale = CurvedAnimation(parent: _controller, curve: Curves.easeOutBack);
     _logoOpacity = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
-
-    Future<void>.delayed(const Duration(milliseconds: 1650), () {
+    _advanceTimer = Timer(const Duration(milliseconds: 1650), () {
       if (mounted) widget.onFinished();
     });
   }
 
   @override
   void dispose() {
+    _advanceTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }
