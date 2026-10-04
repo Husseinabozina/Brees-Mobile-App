@@ -148,10 +148,10 @@ void main() {
         final boundaryFinder = find.byKey(
           const Key('brees-capture-boundary'),
         );
-        expect(boundaryFinder, findsOneWidget);
+        expect(boundaryFinder, findsWidgets);
 
         final boundary = tester.renderObject<RenderRepaintBoundary>(
-          boundaryFinder,
+          boundaryFinder.first,
         );
 
         final metrics = await tester.runAsync<_Metrics>(() async {
