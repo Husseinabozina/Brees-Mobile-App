@@ -16,11 +16,11 @@ BreesApp
 
 The presentation and domain layers depend on abstractions, not on the mock transport.
 
-## Replace the mock backend
+## Real backend path now implemented
 
-### 1. Implement ApiClient
+The repository now includes `RealApiClient`, so the transport adapter and app-root switch are executable rather than documentation-only.
 
-Create a production adapter that implements:
+The client implements:
 
 ```dart
 abstract interface class ApiClient {
@@ -33,15 +33,16 @@ abstract interface class ApiClient {
 }
 ```
 
-That adapter is the correct place for:
+`RealApiClient` currently handles:
 
 - base URL configuration
-- bearer-token/auth headers
+- Bearer-token injection through an `AccessTokenProvider`
 - JSON encoding/decoding
 - request timeouts
-- transport exceptions
-- refresh-token behavior
-- request logging in debug builds
+- non-2xx API errors
+- transport and invalid-JSON failures
+
+Refresh-token orchestration and persistent session storage remain responsibilities of the future authentication/session feature once the real backend contract exists.
 
 ### 2. Reuse the existing data layer
 
@@ -52,21 +53,24 @@ Existing examples:
 - `AuthRemoteDataSourceImpl`
 - `FinanceRemoteDataSourceImpl`
 
-### 3. Inject the production client at the app root
+### 3. Select it at the app root
 
-```dart
-final apiClient = RealApiClient(
-  baseUrl: 'https://api.example.com',
-);
+The app now performs this composition through `BreesRuntimeConfig`.
 
-final dependencies = BreesDependencies.fromApiClient(apiClient);
+Default mock mode:
 
-runApp(
-  BreesApp(dependencies: dependencies),
-);
+```bash
+flutter run
 ```
 
-No screen needs to import `RealApiClient`.
+Real-backend mode:
+
+```bash
+flutter run \\
+  --dart-define=BREES_API_BASE_URL=https://api.example.com
+```
+
+No screen imports `RealApiClient`; the switch happens only in the composition root.
 
 ## API contract currently modeled by the mock
 
@@ -129,3 +133,16 @@ Each new feature should preserve the same dependency direction:
 ```text
 Presentation → Use Case → Repository Contract ← Repository Impl ← Data Source ← ApiClient
 ```
+
+
+## What is still backend-specific
+
+The transport seam is complete, but a real server still needs to supply contracts compatible with the modeled endpoints. Once credentials and a real API contract exist, the next production work is feature-by-feature rather than architectural:
+
+1. wire the real login/session endpoint and runtime token provider,
+2. confirm the registration and finance response schemas,
+3. add refresh-token/session persistence if the backend uses them,
+4. extend endpoints for accounts, transactions, budgets, insights, profile, and settings,
+5. add integration tests against the staging environment.
+
+The UI/domain architecture does not need to be rewritten for those steps.
