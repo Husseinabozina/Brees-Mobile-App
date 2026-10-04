@@ -121,6 +121,7 @@ class AccountListScreen extends StatelessWidget {
               left: 20,
               top: 691,
               child: BreesButton(
+                key: const Key('account-add-new'),
                 label: '+ Add new account',
                 width: 335,
                 onPressed: onAddAccount,
