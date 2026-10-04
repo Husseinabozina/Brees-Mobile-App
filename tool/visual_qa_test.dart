@@ -118,7 +118,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await _loadVisualQaFont(tester);
+    await _loadVisualQaFonts(tester);
 
     final root = Directory('build/visual_qa');
     final runtime = Directory('${root.path}/runtime');
@@ -275,22 +275,29 @@ void main() {
 }
 
 
-Future<void> _loadVisualQaFont(WidgetTester tester) async {
-  final fontPath = Platform.environment['VISUAL_QA_FONT_PATH'];
-  if (fontPath == null || fontPath.isEmpty) {
-    debugPrint(
-      'VISUAL_QA_FONT_PATH is not set; Flutter test fallback font will be used.',
-    );
-    return;
-  }
+Future<void> _loadVisualQaFonts(WidgetTester tester) async {
+  final fonts = <(String, String?)>[
+    ('Inter', Platform.environment['VISUAL_QA_FONT_PATH']),
+    (
+      'MaterialIcons',
+      Platform.environment['VISUAL_QA_MATERIAL_ICONS_PATH'],
+    ),
+  ];
 
   await tester.runAsync<void>(() async {
-    final bytes = File(fontPath).readAsBytesSync();
-    final loader = FontLoader('Inter');
-    loader.addFont(
-      Future<ByteData>.value(ByteData.sublistView(bytes)),
-    );
-    await loader.load();
+    for (final (family, path) in fonts) {
+      if (path == null || path.isEmpty || !File(path).existsSync()) {
+        debugPrint('Visual QA font unavailable: $family ($path)');
+        continue;
+      }
+
+      final bytes = File(path).readAsBytesSync();
+      final loader = FontLoader(family);
+      loader.addFont(
+        Future<ByteData>.value(ByteData.sublistView(bytes)),
+      );
+      await loader.load();
+    }
   });
 }
 
