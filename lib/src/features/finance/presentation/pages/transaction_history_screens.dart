@@ -278,14 +278,15 @@ class TransactionFilterScreen extends StatefulWidget {
   final VoidCallback onContinue;
 
   @override
-  State<TransactionFilterScreen> createState() => _TransactionFilterScreenState();
+  State<TransactionFilterScreen> createState() =>
+      _TransactionFilterScreenState();
 }
 
 class _TransactionFilterScreenState extends State<TransactionFilterScreen> {
   bool kuda = false;
   bool gtb = true;
   bool cowrywise = true;
-  RangeValues range = const RangeValues(.14, .55);
+  RangeValues range = const RangeValues(.10, .43);
 
   @override
   Widget build(BuildContext context) {
@@ -346,7 +347,10 @@ class _TransactionFilterScreenState extends State<TransactionFilterScreen> {
                     top: 48,
                     child: GestureDetector(
                       onTap: widget.onBack,
-                      child: const Icon(Icons.close_rounded, color: Color(0xFF6C7482)),
+                      child: const Icon(
+                        Icons.close_rounded,
+                        color: Color(0xFF6C7482),
+                      ),
                     ),
                   ),
                   const Positioned(
@@ -356,7 +360,10 @@ class _TransactionFilterScreenState extends State<TransactionFilterScreen> {
                     child: Text(
                       'Filters',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -385,7 +392,6 @@ class _TransactionFilterScreenState extends State<TransactionFilterScreen> {
                     width: 335,
                     height: 64,
                     child: Container(
-                      padding: const EdgeInsets.fromLTRB(20, 12, 18, 9),
                       decoration: BoxDecoration(
                         color: const Color(0xFFF5F7FF),
                         borderRadius: BorderRadius.circular(24),
@@ -393,19 +399,36 @@ class _TransactionFilterScreenState extends State<TransactionFilterScreen> {
                       child: const Stack(
                         children: [
                           Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Text('Date', style: TextStyle(color: Color(0xFF5C616F), fontSize: 10)),
-                          ),
-                          Positioned(
-                            left: 0,
-                            bottom: 2,
-                            child: Text('01 Sep 2021 - 10 Sep 2021', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                          ),
-                          Positioned(
-                            right: 0,
+                            left: 20,
                             top: 12,
-                            child: Icon(Icons.calendar_month_rounded, color: BreesColors.primary),
+                            child: Text(
+                              'Date',
+                              style: TextStyle(
+                                color: Color(0xFF5C616F),
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 20,
+                            top: 35,
+                            child: Text(
+                              '01 Sep 2021 - 10 Sep 2021',
+                              style: TextStyle(
+                                fontSize: 14,
+                                height: 17 / 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            right: 18,
+                            top: 20,
+                            child: Icon(
+                              Icons.calendar_month_rounded,
+                              color: BreesColors.primary,
+                              size: 22,
+                            ),
                           ),
                         ],
                       ),
@@ -414,7 +437,13 @@ class _TransactionFilterScreenState extends State<TransactionFilterScreen> {
                   const Positioned(
                     left: 20,
                     top: 222,
-                    child: Text('Account', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                    child: Text(
+                      'Account',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                   Positioned(
                     left: 20,
@@ -424,24 +453,26 @@ class _TransactionFilterScreenState extends State<TransactionFilterScreen> {
                       children: [
                         _FilterAccountRow(
                           name: 'Kuda Bank',
-                          label: 'K',
-                          color: const Color(0xFF4A287C),
+                          assetPath: 'assets/images/filter_kuda.png',
                           value: kuda,
-                          onChanged: (value) => setState(() => kuda = value),
+                          onChanged: (value) =>
+                              setState(() => kuda = value),
                         ),
+                        const SizedBox(height: 4),
                         _FilterAccountRow(
                           name: 'GTB',
-                          label: 'GT',
-                          color: const Color(0xFFD94F00),
+                          assetPath: 'assets/images/filter_gtb.png',
                           value: gtb,
-                          onChanged: (value) => setState(() => gtb = value),
+                          onChanged: (value) =>
+                              setState(() => gtb = value),
                         ),
+                        const SizedBox(height: 4),
                         _FilterAccountRow(
                           name: 'Cowrywise',
-                          label: 'C',
-                          color: const Color(0xFF0070F3),
+                          assetPath: 'assets/images/filter_cowrywise.png',
                           value: cowrywise,
-                          onChanged: (value) => setState(() => cowrywise = value),
+                          onChanged: (value) =>
+                              setState(() => cowrywise = value),
                         ),
                       ],
                     ),
@@ -449,25 +480,56 @@ class _TransactionFilterScreenState extends State<TransactionFilterScreen> {
                   const Positioned(
                     left: 20,
                     top: 462,
-                    child: Text('Price Range', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                    child: Text(
+                      'Price Range',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                   const Positioned(
                     right: 20,
                     top: 462,
                     child: Text(
                       'N10 - N250,000',
-                      style: TextStyle(color: BreesColors.primary, fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        color: BreesColors.primary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const Positioned(
+                    left: 20,
+                    top: 510,
+                    child: Text(
+                      '0',
+                      style: TextStyle(
+                        color: Color(0xFFCFD5FF),
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  const Positioned(
+                    right: 20,
+                    top: 510,
+                    child: Text(
+                      '10,000,000',
+                      style: TextStyle(
+                        color: Color(0xFFCFD5FF),
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                   Positioned(
-                    left: 8,
-                    right: 8,
-                    top: 503,
-                    child: RangeSlider(
+                    left: 20,
+                    top: 528,
+                    width: 335,
+                    height: 48,
+                    child: _FigmaRangeSlider(
                       values: range,
                       onChanged: (value) => setState(() => range = value),
-                      activeColor: BreesColors.primary,
-                      inactiveColor: const Color(0xFFE3E6E8),
                     ),
                   ),
                   Positioned(
@@ -492,41 +554,181 @@ class _TransactionFilterScreenState extends State<TransactionFilterScreen> {
 class _FilterAccountRow extends StatelessWidget {
   const _FilterAccountRow({
     required this.name,
-    required this.label,
-    required this.color,
+    required this.assetPath,
     required this.value,
     required this.onChanged,
   });
 
   final String name;
-  final String label;
-  final Color color;
+  final String assetPath;
   final bool value;
   final ValueChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 62,
-      child: Row(
+      height: 57,
+      child: Stack(
         children: [
-          Container(
+          Positioned(
+            left: 0,
+            top: 14,
             width: 29,
             height: 29,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(6)),
-            child: Text(label, style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
+            child: Image.asset(assetPath, fit: BoxFit.contain),
           ),
-          const SizedBox(width: 16),
-          Expanded(child: Text(name, style: const TextStyle(color: Color(0xFF42527A), fontSize: 14, fontWeight: FontWeight.w500))),
-          Switch(
-            value: value,
-            onChanged: onChanged,
-            activeThumbColor: Colors.white,
-            activeTrackColor: const Color(0xFF456CF5),
-            inactiveThumbColor: Colors.white,
-            inactiveTrackColor: const Color(0xFFE5E7EB),
+          Positioned(
+            left: 45,
+            top: 17,
+            right: 55,
+            child: Text(
+              name,
+              style: const TextStyle(
+                color: Color(0xFF42527A),
+                fontSize: 14,
+                height: 28 / 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
+          Positioned(
+            right: 0,
+            top: 16,
+            child: GestureDetector(
+              onTap: () => onChanged(!value),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 160),
+                width: 40,
+                height: 24,
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: value
+                      ? const Color(0xFF456CF5)
+                      : const Color(0xFFE5E7EB),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: AnimatedAlign(
+                  duration: const Duration(milliseconds: 160),
+                  alignment:
+                      value ? Alignment.centerRight : Alignment.centerLeft,
+                  child: const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FigmaRangeSlider extends StatelessWidget {
+  const _FigmaRangeSlider({
+    required this.values,
+    required this.onChanged,
+  });
+
+  final RangeValues values;
+  final ValueChanged<RangeValues> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    const trackWidth = 335.0;
+    const handleWidth = 46.0;
+    final leftX = (trackWidth - handleWidth) * values.start;
+    final rightX = (trackWidth - handleWidth) * values.end;
+
+    void update(double dx) {
+      final normalized = (dx / trackWidth).clamp(0.0, 1.0);
+      final startDistance = (normalized - values.start).abs();
+      final endDistance = (normalized - values.end).abs();
+      if (startDistance <= endDistance) {
+        onChanged(
+          RangeValues(
+            normalized.clamp(0.0, values.end - .04),
+            values.end,
+          ),
+        );
+      } else {
+        onChanged(
+          RangeValues(
+            values.start,
+            normalized.clamp(values.start + .04, 1.0),
+          ),
+        );
+      }
+    }
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTapDown: (details) => update(details.localPosition.dx),
+      onHorizontalDragUpdate: (details) =>
+          update(details.localPosition.dx),
+      child: Stack(
+        children: [
+          const Positioned(
+            left: 0,
+            right: 0,
+            top: 19,
+            height: 5,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: Color(0xFFE3E6E8),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+            ),
+          ),
+          Positioned(
+            left: trackWidth * values.start,
+            top: 20,
+            width: trackWidth * (values.end - values.start),
+            height: 3,
+            child: const DecoratedBox(
+              decoration: BoxDecoration(color: BreesColors.primary),
+            ),
+          ),
+          Positioned(
+            left: leftX,
+            top: 6,
+            child: const _RangeHandle(),
+          ),
+          Positioned(
+            left: rightX,
+            top: 6,
+            child: const _RangeHandle(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RangeHandle extends StatelessWidget {
+  const _RangeHandle();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 46,
+      height: 24,
+      decoration: BoxDecoration(
+        color: BreesColors.primary,
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.chevron_left_rounded, color: Colors.white, size: 13),
+          Icon(Icons.chevron_right_rounded, color: Colors.white, size: 13),
         ],
       ),
     );
