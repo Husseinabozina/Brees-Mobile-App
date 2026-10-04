@@ -558,118 +558,108 @@ class HomeSearchScreen extends StatelessWidget {
     super.key,
     required this.onClose,
     required this.onOpenTransactions,
+    this.background,
   });
 
   final VoidCallback onClose;
   final VoidCallback onOpenTransactions;
+  final Widget? background;
 
   @override
   Widget build(BuildContext context) {
     return DesignCanvas(
       background: BreesColors.primary,
-      child: ColoredBox(
-        color: BreesColors.primary,
-        child: Stack(
-          children: [
-            Positioned(
-              left: 20,
-              top: 140,
-              width: 335,
-              height: 335,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFF24178E),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.fromLTRB(20, 226, 20, 0),
-                  child: Column(
-                    children: [
-                      _DimBalance(name: 'Kuda bank', amount: 'N12,000.00'),
-                      SizedBox(height: 14),
-                      _DimBalance(name: 'GT Bank', amount: 'N950.00'),
-                      SizedBox(height: 14),
-                      _DimBalance(name: 'PiggyVest', amount: 'N1,050.00'),
-                    ],
+      child: Stack(
+        children: [
+          if (background != null)
+            Positioned.fill(
+              child: IgnorePointer(child: background!),
+            )
+          else
+            const ColoredBox(color: BreesColors.primary),
+          Positioned.fill(
+            child: ColoredBox(
+              color: const Color(0xFF1D0D93).withValues(alpha: .62),
+            ),
+          ),
+          Positioned(
+            left: 20,
+            top: 68,
+            width: 335,
+            height: 60,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: BreesColors.primary.withValues(alpha: .82),
+                border: Border.all(color: const Color(0xFFC9C0FF)),
+                borderRadius: BorderRadius.circular(32),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.search_rounded, color: Colors.white),
+                  const SizedBox(width: 16),
+                  const Expanded(
+                    child: Text(
+                      'James',
+                      style: TextStyle(color: Colors.white, fontSize: 14),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 20,
-              top: 492,
-              width: 335,
-              height: 89,
-              child: Container(
-                decoration: BoxDecoration(color: const Color(0xFF25178F), borderRadius: BorderRadius.circular(16)),
-              ),
-            ),
-            Positioned(
-              left: 20,
-              top: 650,
-              width: 335,
-              height: 155,
-              child: Container(
-                decoration: BoxDecoration(color: const Color(0xFF3722B0), borderRadius: BorderRadius.circular(16)),
-              ),
-            ),
-            Positioned(
-              left: 20,
-              top: 68,
-              width: 335,
-              height: 60,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFFC9C0FF)),
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.search_rounded, color: Colors.white),
-                    const SizedBox(width: 16),
-                    const Expanded(child: Text('James', style: TextStyle(color: Colors.white, fontSize: 14))),
-                    GestureDetector(
-                      onTap: onClose,
-                      child: const CircleAvatar(
-                        radius: 12,
-                        backgroundColor: Color(0xFF3821C6),
-                        child: Icon(Icons.close_rounded, color: Color(0xFFC7BEFF), size: 16),
+                  GestureDetector(
+                    onTap: onClose,
+                    child: const CircleAvatar(
+                      radius: 12,
+                      backgroundColor: Color(0xFF3821C6),
+                      child: Icon(
+                        Icons.close_rounded,
+                        color: Color(0xFFC7BEFF),
+                        size: 16,
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 40,
-              top: 151,
-              width: 295,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _SearchSuggestion(text: 'Transfer to “James” UBA', onTap: onOpenTransactions),
-                  const SizedBox(height: 22),
-                  _SearchSuggestion(text: 'Received cash from James Zenith', onTap: onOpenTransactions),
-                  const SizedBox(height: 22),
-                  _SearchSuggestion(text: 'Transfer to James GTB', onTap: onOpenTransactions),
-                  const SizedBox(height: 34),
-                  GestureDetector(
-                    onTap: onOpenTransactions,
-                    child: const Text('See more ...', style: TextStyle(color: Colors.white, fontSize: 12)),
                   ),
                 ],
               ),
             ),
-            const Positioned(
-              top: 0,
-              child: BreesStatusBar(
-                foreground: Colors.white,
-                assetPath: 'assets/images/status_white.png',
-              ),
+          ),
+          Positioned(
+            left: 40,
+            top: 151,
+            width: 295,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _SearchSuggestion(
+                  text: 'Transfer to “James” UBA',
+                  onTap: onOpenTransactions,
+                ),
+                const SizedBox(height: 22),
+                _SearchSuggestion(
+                  text: 'Received cash from James Zenith',
+                  onTap: onOpenTransactions,
+                ),
+                const SizedBox(height: 22),
+                _SearchSuggestion(
+                  text: 'Transfer to James GTB',
+                  onTap: onOpenTransactions,
+                ),
+                const SizedBox(height: 34),
+                GestureDetector(
+                  onTap: onOpenTransactions,
+                  child: const Text(
+                    'See more ...',
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          const Positioned(
+            top: 0,
+            child: BreesStatusBar(
+              foreground: Colors.white,
+              assetPath: 'assets/images/status_white.png',
+            ),
+          ),
+        ],
       ),
     );
   }
