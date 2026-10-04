@@ -17,11 +17,14 @@ jobs:
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
-      - name: Download Inter for visual QA
-        run: >-
-          curl -fL --retry 3
-          -o /tmp/Inter.ttf
-          'https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf'
+      - name: Prepare visual QA fonts
+        run: |
+          curl -fL --retry 3 \
+            -o /tmp/Inter.ttf \
+            'https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf'
+          MATERIAL_ICONS_PATH="$(find "$FLUTTER_ROOT" -name MaterialIcons-Regular.otf | head -n 1)"
+          test -n "$MATERIAL_ICONS_PATH"
+          echo "VISUAL_QA_MATERIAL_ICONS_PATH=$MATERIAL_ICONS_PATH" >> "$GITHUB_ENV"
       - name: Run visual QA
         env:
           VISUAL_QA_FONT_PATH: /tmp/Inter.ttf
