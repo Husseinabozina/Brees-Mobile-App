@@ -532,56 +532,71 @@ class _TransactionListRow extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: SizedBox(
         height: 48,
-        child: Row(
+        child: Stack(
           children: [
-            CircleAvatar(
-              radius: 21.5,
-              backgroundColor: const Color(0xFFEEF2F8),
-              child: Text(
-                transaction.initial,
-                style: const TextStyle(
-                  color: Color(0xFF005CEE),
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
+            Positioned(
+              left: 0,
+              top: 2.5,
+              width: 43,
+              height: 43,
+              child: CircleAvatar(
+                radius: 21.5,
+                backgroundColor: const Color(0xFFEEF2F8),
+                child: Text(
+                  transaction.initial,
+                  style: const TextStyle(
+                    color: Color(0xFF005CEE),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    child: Text(
-                      transaction.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(color: Color(0xFF131313), fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    bottom: 0,
-                    right: 0,
-                    child: Text(
-                      transaction.subtitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(color: Color(0x80131313), fontSize: 12),
-                    ),
-                  ),
-                ],
+            Positioned(
+              left: 55,
+              right: 86,
+              top: 3,
+              child: Text(
+                transaction.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Color(0xFF131313),
+                  fontSize: 14,
+                  height: 18 / 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
-            const SizedBox(width: 8),
-            Text(
-              transaction.amountLabel,
-              style: TextStyle(
-                color: transaction.isIncome ? const Color(0xFF1B7A00) : const Color(0xFF050D2A),
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+            Positioned(
+              left: 55,
+              right: 86,
+              top: 27,
+              child: Text(
+                transaction.subtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Color(0x80131313),
+                  fontSize: 12,
+                  height: 16 / 12,
+                ),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              top: 14,
+              width: 78,
+              child: Text(
+                transaction.amountLabel,
+                maxLines: 1,
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  color: transaction.isIncome ? const Color(0xFF1B7A00) : const Color(0xFF050D2A),
+                  fontSize: 14,
+                  height: 18 / 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],
@@ -599,19 +614,33 @@ class _CategoryPill extends StatelessWidget {
     return Container(
       width: 155,
       height: 46,
-      padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
         color: const Color(0xFFF7F7FD),
         borderRadius: BorderRadius.circular(24),
       ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: const Stack(
         children: [
-          Text('🍔', style: TextStyle(fontSize: 14)),
-          SizedBox(width: 10),
-          Text('Eating out', style: TextStyle(color: Color(0xFF6875B7), fontSize: 14, fontWeight: FontWeight.w600)),
-          SizedBox(width: 8),
-          Icon(Icons.arrow_drop_down_rounded, color: Color(0xFFB4BCD7)),
+          Positioned(left: 18, top: 13, child: Text('🍔', style: TextStyle(fontSize: 14, height: 18 / 14))),
+          Positioned(
+            left: 48,
+            top: 13,
+            width: 70,
+            child: Text(
+              'Eating out',
+              maxLines: 1,
+              style: TextStyle(
+                color: Color(0xFF6875B7),
+                fontSize: 14,
+                height: 18 / 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 10,
+            top: 11,
+            child: Icon(Icons.arrow_drop_down_rounded, color: Color(0xFFB4BCD7), size: 24),
+          ),
         ],
       ),
     );
@@ -626,6 +655,63 @@ class _DetailRowData {
   final bool bold;
 }
 
+class _DetailCard extends StatelessWidget {
+  const _DetailCard({required this.rows});
+  final List<_DetailRowData> rows;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF9FAFB),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Stack(
+        children: List.generate(rows.length, (index) {
+          final row = rows[index];
+          final top = 24.0 + index * 40.0;
+          return Stack(
+            children: [
+              Positioned(
+                left: 24,
+                top: top,
+                width: 124,
+                height: 24,
+                child: Text(
+                  row.label,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    color: Color(0xFF6C727F),
+                    fontSize: 14,
+                    height: 24 / 14,
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 24,
+                top: top,
+                width: 150,
+                height: 24,
+                child: Text(
+                  row.value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    color: row.valueColor,
+                    fontSize: 14,
+                    height: 24 / 14,
+                    fontWeight: row.bold ? FontWeight.w600 : FontWeight.w400,
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
+      ),
+    );
+  }
+}
 class _DetailCard extends StatelessWidget {
   const _DetailCard({required this.rows});
   final List<_DetailRowData> rows;
