@@ -162,10 +162,12 @@ class BudgetIntroScreen extends StatelessWidget {
     super.key,
     required this.onClose,
     required this.onCreate,
+    this.background,
   });
 
   final VoidCallback onClose;
   final VoidCallback onCreate;
+  final Widget? background;
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +175,18 @@ class BudgetIntroScreen extends StatelessWidget {
       background: const Color(0xFF8D8F95),
       child: Stack(
         children: [
-          const ColoredBox(color: Color(0xFF797A7F), child: SizedBox.expand()),
+          if (background != null)
+            Positioned.fill(
+              child: IgnorePointer(child: background!),
+            )
+          else
+            const ColoredBox(
+              color: Color(0xFF797A7F),
+              child: SizedBox.expand(),
+            ),
+          Positioned.fill(
+            child: ColoredBox(color: Colors.black.withValues(alpha: .42)),
+          ),
           Positioned(
             left: 23,
             top: 161,
@@ -184,7 +197,11 @@ class BudgetIntroScreen extends StatelessWidget {
                 color: BreesColors.primary,
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: const [
-                  BoxShadow(color: Color(0x22000000), blurRadius: 24, offset: Offset(0, 14)),
+                  BoxShadow(
+                    color: Color(0x33000000),
+                    blurRadius: 26,
+                    offset: Offset(0, 14),
+                  ),
                 ],
               ),
               child: Stack(
@@ -198,7 +215,11 @@ class BudgetIntroScreen extends StatelessWidget {
                       child: const CircleAvatar(
                         radius: 13,
                         backgroundColor: Color(0xFFC7C0FF),
-                        child: Icon(Icons.close_rounded, size: 18, color: BreesColors.primary),
+                        child: Icon(
+                          Icons.close_rounded,
+                          size: 18,
+                          color: BreesColors.primary,
+                        ),
                       ),
                     ),
                   ),
@@ -207,7 +228,10 @@ class BudgetIntroScreen extends StatelessWidget {
                     top: 28,
                     width: 208,
                     height: 150,
-                    child: Image.asset('assets/images/budget_intro_illustration.png', fit: BoxFit.contain),
+                    child: Image.asset(
+                      'assets/images/budget_intro_illustration.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
                   const Positioned(
                     left: 24,
@@ -215,17 +239,41 @@ class BudgetIntroScreen extends StatelessWidget {
                     top: 225,
                     child: Column(
                       children: [
-                        Text('Budget', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
+                        Text(
+                          'Budget',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         SizedBox(height: 12),
-                        Text('Overspend no more', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700)),
+                        Text(
+                          'Overspend no more',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                         SizedBox(height: 8),
                         Text(
                           'Get ready to start using budgets for your\ndaily financial app.',
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white, fontSize: 14, height: 1.55),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            height: 1.55,
+                          ),
                         ),
                         SizedBox(height: 22),
-                        Text('●  •  •  •', style: TextStyle(color: Color(0xFFDCD7FF), letterSpacing: 2)),
+                        Text(
+                          '●  •  •  •',
+                          style: TextStyle(
+                            color: Color(0xFFDCD7FF),
+                            letterSpacing: 2,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -242,7 +290,13 @@ class BudgetIntroScreen extends StatelessWidget {
                         foregroundColor: BreesColors.primary,
                         shape: const StadiumBorder(),
                       ),
-                      child: const Text('Create a New Budget', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                      child: const Text(
+                        'Create a New Budget',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                 ],
