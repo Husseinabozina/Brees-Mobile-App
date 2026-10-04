@@ -122,23 +122,22 @@ Implemented mock endpoints:
 
 The active dependencies are assembled through `BreesDependencies`.
 
-Today:
+By default, the app starts with the mock backend. A production-style `RealApiClient` is also implemented and the app root selects it automatically when `BREES_API_BASE_URL` is supplied.
 
-```dart
-final dependencies = BreesDependencies.mock();
+Mock mode:
+
+```bash
+flutter run
 ```
 
-When a real backend is available, the intended migration is simply to implement `ApiClient` with the preferred networking package and inject it at the app root:
+Real-backend mode:
 
-```dart
-final dependencies = BreesDependencies.fromApiClient(
-  RealApiClient(baseUrl: apiBaseUrl),
-);
-
-runApp(
-  BreesApp(dependencies: dependencies),
-);
+```bash
+flutter run \\
+  --dart-define=BREES_API_BASE_URL=https://api.example.com
 ```
+
+At startup, `BreesRuntimeConfig` builds either `BreesDependencies.mock()` or `BreesDependencies.fromApiClient(RealApiClient(...))`. The real adapter already handles JSON requests/responses, request timeouts, Bearer-token injection through an access-token provider, and API/transport failures.
 
 The screens, use cases, repository contracts, and presentation controllers do not need to know that the data source changed.
 
@@ -211,6 +210,7 @@ The comparison metric is used as a regression/triage signal; it is **not present
 - **Flutter widgets instead of screenshot-based screens** — Figma exports are QA references only.
 - **Feature-first structure** — code stays navigable as the project grows.
 - **Domain contracts before infrastructure** — backend choice stays replaceable.
+- **Runtime backend selection** — `BREES_API_BASE_URL` switches the composition root from mock to real transport without UI changes.
 - **Local mock API behind a client interface** — useful portfolio data without coupling presentation to fake repositories.
 - **Dedicated system-preview feature** — Gmail/browser demo states do not pollute finance/auth business logic.
 - **Animations kept purposeful** — motion supports a finance-product feel rather than becoming decorative noise.
@@ -233,6 +233,7 @@ The repository contains:
 - flow/widget tests for onboarding, auth, finance, account, sorting and navigation
 - runtime regression tests across the screen-state map
 - mock-backend tests for registration validation and finance JSON → domain mapping
+- real HTTP adapter contract tests for JSON, Bearer auth, API errors, and base-URL validation
 - automated visual comparison for all 60 states
 
 ## My role
