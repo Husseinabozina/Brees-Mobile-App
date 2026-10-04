@@ -162,7 +162,7 @@ class _DashboardContent extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF371FC4),
+                color: const Color(0xFF210FA4),
                 borderRadius: BorderRadius.circular(24),
               ),
               child: Stack(
@@ -170,12 +170,9 @@ class _DashboardContent extends StatelessWidget {
                   Positioned.fill(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(24),
-                      child: Opacity(
-                        opacity: .42,
-                        child: Image.asset(
-                          'assets/images/home_balance_pattern.png',
-                          fit: BoxFit.cover,
-                        ),
+                      child: Image.asset(
+                        'assets/images/home_balance_pattern_exact.png',
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -234,16 +231,16 @@ class _DashboardContent extends StatelessWidget {
         ),
         Positioned(
           left: 20,
-          top: 492,
+          top: 491,
           width: 335,
-          height: 89,
+          height: 90,
           child: GestureDetector(
             key: const Key('home-sort-transactions'),
             onTap: onSortTransactions,
             behavior: HitTestBehavior.opaque,
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF321EB2),
+                color: const Color(0xFF2816A7),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: const Stack(
@@ -259,12 +256,12 @@ class _DashboardContent extends StatelessWidget {
         ),
         const Positioned(
           left: 20,
-          top: 617,
+          top: 613,
           child: Text('My Budgets', style: TextStyle(color: Color(0xFFDCD8FF), fontSize: 14)),
         ),
         Positioned(
           left: 20,
-          top: 650,
+          top: 649,
           width: 335,
           height: extended ? 194 : 108,
           child: GestureDetector(
@@ -273,7 +270,7 @@ class _DashboardContent extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF4933E9),
+                color: const Color(0xFF432DEC),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Stack(
@@ -314,19 +311,19 @@ class _DashboardContent extends StatelessWidget {
           ),
         ),
         if (extended) ...[
-          const Positioned(left: 20, top: 878, child: Text('Transactions', style: TextStyle(color: Color(0xFFDCD8FF), fontSize: 14))),
+          const Positioned(left: 20, top: 872, child: Text('Transactions', style: TextStyle(color: Color(0xFFDCD8FF), fontSize: 14))),
           Positioned(
             left: 20,
-            top: 911,
+            top: 908,
             width: 335,
-            height: 188,
+            height: 229,
             child: GestureDetector(
               key: const Key('home-open-transactions'),
               onTap: onTransactions,
               behavior: HitTestBehavior.opaque,
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4933E9),
+                  color: const Color(0xFF432DEC),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Stack(
