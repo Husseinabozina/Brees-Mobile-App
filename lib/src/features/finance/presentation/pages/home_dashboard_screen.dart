@@ -167,6 +167,18 @@ class _DashboardContent extends StatelessWidget {
               ),
               child: Stack(
                 children: [
+                  Positioned.fill(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(24),
+                      child: Opacity(
+                        opacity: .42,
+                        child: Image.asset(
+                          'assets/images/home_balance_pattern.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
                   Positioned(
                     right: 22,
                     top: 20,
@@ -176,11 +188,23 @@ class _DashboardContent extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    left: 141,
-                    top: 25,
-                    width: 52,
-                    height: 52,
-                    child: Image.asset('assets/images/home_avatar.png'),
+                    left: 139,
+                    top: 23,
+                    width: 56,
+                    height: 56,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/images/home_avatar.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ),
                   const Positioned(
                     left: 0,
