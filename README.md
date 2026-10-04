@@ -1,6 +1,5 @@
 <div align="center">
-  <img src="docs/assets/brees-mark.svg" alt="Brees app icon" width="104" />
-  <h1>Brees</h1>
+  <img src="docs/assets/brees-logo.png" alt="Brees wordmark" width="260" />
   <p><strong>A polished Flutter personal-finance experience built from a complete Figma product flow.</strong></p>
   <p>60 visual states · Clean Architecture · Motion · Automated visual QA · CI</p>
 
@@ -143,7 +142,7 @@ flutter run
 <details>
 <summary><strong>Design credit</strong></summary>
 
-The visual direction is based on the public **Brees Fintech App UI Kit** on Figma Community. This repository is an independent Flutter implementation created for portfolio and code-review purposes.
+The visual direction is based on the public **Brees Fintech App UI Kit** on Figma Community. The app branding follows the original **Brees** wordmark treatment shown on the Figma launch screen (`3:1820`). This repository is an independent Flutter implementation created for portfolio and code-review purposes.
 
 </details>
 
