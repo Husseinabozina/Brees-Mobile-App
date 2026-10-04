@@ -15,7 +15,16 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(home: BreesFlow(initialStep: step)),
     );
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 450));
+  }
+
+  void expectNoFlutterException(WidgetTester tester, String reason) {
+    final exception = tester.takeException();
+    if (exception is FlutterError) {
+      debugPrint(exception.toStringDeep());
+    }
+    expect(exception, isNull, reason: reason);
   }
 
   const regressionSteps = <BreesStep>[
@@ -46,10 +55,9 @@ void main() {
     testWidgets('$step renders without layout exceptions', (tester) async {
       await pumpStep(tester, step);
 
-      expect(
-        tester.takeException(),
-        isNull,
-        reason: '$step must not produce RenderFlex overflow or other layout exceptions.',
+      expectNoFlutterException(
+        tester,
+        '$step must not produce RenderFlex overflow or other layout exceptions.',
       );
 
       await tester.pumpWidget(const SizedBox.shrink());
@@ -72,7 +80,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 350));
 
     expect(find.text('Search in mail'), findsOneWidget);
-    expect(tester.takeException(), isNull);
+    expectNoFlutterException(tester, 'interaction must not produce a Flutter exception');
   });
 
   testWidgets('Android system back follows in-app Brees history', (tester) async {
@@ -89,7 +97,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 350));
 
     expect(find.text('Search in mail'), findsOneWidget);
-    expect(tester.takeException(), isNull);
+    expectNoFlutterException(tester, 'interaction must not produce a Flutter exception');
   });
 
   testWidgets('previously dead primary controls now navigate', (tester) async {
@@ -105,7 +113,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 350));
     expect(find.text('Let’s get your account set up!'), findsOneWidget);
 
-    expect(tester.takeException(), isNull);
+    expectNoFlutterException(tester, 'interaction must not produce a Flutter exception');
   });
 
   testWidgets('home notification and search actions are interactive', (tester) async {
@@ -123,7 +131,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 350));
     expect(find.text('James'), findsOneWidget);
 
-    expect(tester.takeException(), isNull);
+    expectNoFlutterException(tester, 'interaction must not produce a Flutter exception');
   });
 
   testWidgets('budget creation controls traverse the new flow', (tester) async {
@@ -145,6 +153,6 @@ void main() {
     await tester.pump(const Duration(milliseconds: 350));
     expect(find.text('Weekly'), findsOneWidget);
 
-    expect(tester.takeException(), isNull);
+    expectNoFlutterException(tester, 'interaction must not produce a Flutter exception');
   });
 }
