@@ -54,29 +54,36 @@ class ForgotPasswordScreen extends StatelessWidget {
               child: Container(
                 width: 335,
                 height: 61,
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 8),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
                 ),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: const Stack(
                   children: [
-                    Text(
-                      'Email',
-                      style: TextStyle(
-                        color: BreesColors.muted,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
+                    Positioned(
+                      left: 20,
+                      top: 11,
+                      child: Text(
+                        'Email',
+                        style: TextStyle(
+                          color: BreesColors.muted,
+                          fontSize: 10,
+                          height: 12 / 10,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Louis04real@gmail.com',
-                      style: TextStyle(
-                        color: Color(0xFF040C22),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                    Positioned(
+                      left: 20,
+                      top: 31,
+                      child: Text(
+                        'Louis04real@gmail.com',
+                        style: TextStyle(
+                          color: Color(0xFF040C22),
+                          fontSize: 14,
+                          height: 17 / 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],
