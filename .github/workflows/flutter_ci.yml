@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   analyze-and-test:
     runs-on: ubuntu-latest
@@ -36,3 +39,23 @@ jobs:
           name: visual-qa
           path: build/visual_qa
           if-no-files-found: error
+
+      - name: Refresh portfolio screenshots
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p screenshots
+          cp build/visual_qa/runtime/02_3-1853.png screenshots/onboarding.png
+          cp build/visual_qa/runtime/05_3-1932.png screenshots/sign_up.png
+          cp build/visual_qa/runtime/22_3-2922.png screenshots/home_dashboard.png
+          cp build/visual_qa/runtime/25_3-3287.png screenshots/account_details.png
+          cp build/visual_qa/runtime/46_3-5618.png screenshots/budgets.png
+          cp build/visual_qa/runtime/48_3-6026.png screenshots/insights.png
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add screenshots
+          if git diff --cached --quiet; then
+            echo "Portfolio screenshots are already current."
+            exit 0
+          fi
+          git commit -m "docs: refresh portfolio screenshots [skip ci]"
+          git push
