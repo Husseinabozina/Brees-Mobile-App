@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/brees_colors.dart';
-import '../../../../core/widgets/brees_button.dart';
 import '../../../../core/widgets/chrome_shell.dart';
 import '../../../../core/widgets/design_canvas.dart';
 
@@ -46,8 +45,14 @@ class _BrowserAccountScreenState extends State<BrowserAccountScreen> {
           child: Transform.translate(
             offset: Offset(0, _animate ? 0 : 16),
             child: widget.showPasswordForm
-                ? _PasswordForm(onPressed: widget.onPressed)
-                : _SuccessContent(message: widget.message, onPressed: widget.onPressed),
+                ? ColoredBox(
+                    color: BreesColors.canvas,
+                    child: _PasswordForm(onPressed: widget.onPressed),
+                  )
+                : _SuccessContent(
+                    message: widget.message,
+                    onPressed: widget.onPressed,
+                  ),
           ),
         ),
       ),
@@ -157,30 +162,83 @@ class _PasswordForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 88, 20, 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset('assets/images/password_lock.png', width: 75, height: 75),
-          const SizedBox(height: 26),
-          const Text(
+    return Stack(
+      children: [
+        Positioned(
+          left: 20,
+          top: 88,
+          width: 75,
+          height: 75,
+          child: Image.asset(
+            'assets/images/password_lock.png',
+            fit: BoxFit.contain,
+          ),
+        ),
+        const Positioned(
+          left: 20,
+          top: 187,
+          width: 335,
+          height: 29,
+          child: Text(
             'Set your password',
-            style: TextStyle(color: BreesColors.heading, fontSize: 24, fontWeight: FontWeight.w700),
+            style: TextStyle(
+              color: BreesColors.heading,
+              fontSize: 24,
+              height: 29 / 24,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-          const SizedBox(height: 8),
-          const Text(
-            'Please create your new account password\nfor Bress',
-            style: TextStyle(color: BreesColors.heading, fontSize: 16, height: 1.6),
+        ),
+        const Positioned(
+          left: 20,
+          top: 224,
+          width: 335,
+          height: 52,
+          child: Text(
+            'Please create your new account password for Bress',
+            style: TextStyle(
+              color: BreesColors.heading,
+              fontSize: 16,
+              height: 26 / 16,
+            ),
           ),
-          const SizedBox(height: 30),
-          const _BrowserField(label: 'Password'),
-          const SizedBox(height: 16),
-          const _BrowserField(label: 'Retype Password'),
-          const SizedBox(height: 32),
-          BreesButton(label: 'Continue', width: 335, onPressed: onPressed),
-        ],
-      ),
+        ),
+        const Positioned(
+          left: 20,
+          top: 308,
+          child: _BrowserField(label: 'Password'),
+        ),
+        const Positioned(
+          left: 20,
+          top: 385,
+          child: _BrowserField(label: 'Retype Password'),
+        ),
+        Positioned(
+          left: 20,
+          top: 478,
+          width: 335,
+          height: 62,
+          child: FilledButton(
+            onPressed: onPressed,
+            style: FilledButton.styleFrom(
+              backgroundColor: BreesColors.primary,
+              foregroundColor: Colors.white,
+              padding: EdgeInsets.zero,
+              elevation: 0,
+              shadowColor: Colors.transparent,
+              shape: const StadiumBorder(),
+            ),
+            child: const Text(
+              'Continue',
+              style: TextStyle(
+                fontSize: 16,
+                height: 20 / 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
