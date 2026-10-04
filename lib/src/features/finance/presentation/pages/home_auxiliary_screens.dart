@@ -558,109 +558,338 @@ class HomeSearchScreen extends StatelessWidget {
     super.key,
     required this.onClose,
     required this.onOpenTransactions,
-    this.background,
   });
 
   final VoidCallback onClose;
   final VoidCallback onOpenTransactions;
-  final Widget? background;
 
   @override
   Widget build(BuildContext context) {
     return DesignCanvas(
       background: BreesColors.primary,
-      child: Stack(
-        children: [
-          if (background != null)
-            Positioned.fill(
-              child: IgnorePointer(child: background!),
-            )
-          else
-            const ColoredBox(color: BreesColors.primary),
-          Positioned.fill(
-            child: ColoredBox(
-              color: const Color(0xFF1D0D93).withValues(alpha: .62),
-            ),
-          ),
-          Positioned(
-            left: 20,
-            top: 68,
-            width: 335,
-            height: 60,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: BreesColors.primary.withValues(alpha: .82),
-                border: Border.all(color: const Color(0xFFC9C0FF)),
-                borderRadius: BorderRadius.circular(32),
+      child: ColoredBox(
+        color: BreesColors.primary,
+        child: Stack(
+          children: [
+            const Positioned(
+              top: 0,
+              child: BreesStatusBar(
+                foreground: Colors.white,
+                assetPath: 'assets/images/status_white.png',
               ),
-              child: Row(
-                children: [
-                  const Icon(Icons.search_rounded, color: Colors.white),
-                  const SizedBox(width: 16),
-                  const Expanded(
-                    child: Text(
-                      'James',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+            Positioned(
+              left: 20,
+              top: 68,
+              width: 335,
+              height: 60,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF4A2DF0),
+                  border: Border.all(color: const Color(0xFFC9C0FF)),
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.search_rounded, color: Colors.white),
+                    const SizedBox(width: 16),
+                    const Expanded(
+                      child: Text(
+                        'James',
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                      ),
                     ),
+                    GestureDetector(
+                      onTap: onClose,
+                      child: const CircleAvatar(
+                        radius: 12,
+                        backgroundColor: Color(0xFF3821C6),
+                        child: Icon(
+                          Icons.close_rounded,
+                          color: Color(0xFFC7BEFF),
+                          size: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              left: 40,
+              top: 151,
+              width: 295,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _SearchSuggestion(
+                    text: 'Transfer to “James” UBA',
+                    onTap: onOpenTransactions,
                   ),
+                  const SizedBox(height: 22),
+                  _SearchSuggestion(
+                    text: 'Received cash from James Zenith',
+                    onTap: onOpenTransactions,
+                  ),
+                  const SizedBox(height: 22),
+                  _SearchSuggestion(
+                    text: 'Transfer to James GTB',
+                    onTap: onOpenTransactions,
+                  ),
+                  const SizedBox(height: 34),
                   GestureDetector(
-                    onTap: onClose,
-                    child: const CircleAvatar(
-                      radius: 12,
-                      backgroundColor: Color(0xFF3821C6),
-                      child: Icon(
-                        Icons.close_rounded,
-                        color: Color(0xFFC7BEFF),
-                        size: 16,
+                    onTap: onOpenTransactions,
+                    child: const Text(
+                      'See more ...',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-          Positioned(
-            left: 40,
-            top: 151,
-            width: 295,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _SearchSuggestion(
-                  text: 'Transfer to “James” UBA',
-                  onTap: onOpenTransactions,
+            Positioned(
+              left: 20,
+              top: 357,
+              width: 335,
+              height: 118,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(24),
                 ),
-                const SizedBox(height: 22),
-                _SearchSuggestion(
-                  text: 'Received cash from James Zenith',
-                  onTap: onOpenTransactions,
+                child: Stack(
+                  children: [
+                    const ColoredBox(
+                      color: Color(0xFF27169D),
+                      child: SizedBox.expand(),
+                    ),
+                    Positioned.fill(
+                      child: Opacity(
+                        opacity: .28,
+                        child: Image.asset(
+                          'assets/images/home_balance_pattern.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 20,
+                      right: 20,
+                      top: 13,
+                      child: _SearchBalanceRow(
+                        name: 'Kuda bank',
+                        amount: 'N12,000.00',
+                      ),
+                    ),
+                    const Positioned(
+                      left: 20,
+                      right: 20,
+                      top: 46,
+                      child: _SearchBalanceRow(
+                        name: 'GT Bank',
+                        amount: 'N950.00',
+                      ),
+                    ),
+                    const Positioned(
+                      left: 20,
+                      right: 20,
+                      top: 79,
+                      child: _SearchBalanceRow(
+                        name: 'PiggyVest',
+                        amount: 'N1,050.00',
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 22),
-                _SearchSuggestion(
-                  text: 'Transfer to James GTB',
-                  onTap: onOpenTransactions,
-                ),
-                const SizedBox(height: 34),
-                GestureDetector(
-                  onTap: onOpenTransactions,
-                  child: const Text(
-                    'See more ...',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          const Positioned(
-            top: 0,
-            child: BreesStatusBar(
-              foreground: Colors.white,
-              assetPath: 'assets/images/status_white.png',
+            Positioned(
+              left: 20,
+              top: 492,
+              width: 335,
+              height: 89,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF25169A),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Stack(
+                  children: [
+                    Positioned(
+                      left: 16,
+                      top: 25,
+                      child: CircleAvatar(
+                        radius: 19,
+                        backgroundColor: Color(0xFF5A4BE3),
+                        child: Icon(
+                          Icons.settings_suggest_outlined,
+                          color: Colors.white,
+                          size: 21,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 80,
+                      top: 20,
+                      child: Text(
+                        'Sort your transactions',
+                        style: TextStyle(
+                          color: Color(0xFFAFA7DA),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 80,
+                      top: 43,
+                      child: Text(
+                        'Get points for sorting your\ntransactions',
+                        style: TextStyle(
+                          color: Color(0xFF8E85C5),
+                          fontSize: 12,
+                          height: 1.35,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 16,
+                      top: 32,
+                      child: Icon(
+                        Icons.chevron_right_rounded,
+                        color: Color(0xFF6B61B7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
+            const Positioned(
+              left: 20,
+              top: 619,
+              child: Text(
+                'My Budgets',
+                style: TextStyle(
+                  color: Color(0xFF8D84C6),
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 20,
+              top: 650,
+              width: 335,
+              height: 230,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF3020B1),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Stack(
+                  children: [
+                    Positioned(
+                      left: 16,
+                      top: 16,
+                      child: Text(
+                        'You have',
+                        style: TextStyle(
+                          color: Color(0xFFA9A0DD),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 16,
+                      top: 15,
+                      child: CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Color(0xFF23159A),
+                        child: Icon(
+                          Icons.chevron_right_rounded,
+                          size: 18,
+                          color: Color(0xFF756CC6),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 16,
+                      top: 42,
+                      child: Text(
+                        'N29,880',
+                        style: TextStyle(
+                          color: Color(0xFFC5BFEA),
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 16,
+                      top: 76,
+                      child: Text(
+                        'Left out of N80,888 budgeted',
+                        style: TextStyle(
+                          color: Color(0xFF9E95D0),
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 16,
+                      right: 16,
+                      top: 126,
+                      child: LinearProgressIndicator(
+                        value: .76,
+                        minHeight: 4,
+                        backgroundColor: Color(0xFF4034A5),
+                        valueColor: AlwaysStoppedAnimation(
+                          Color(0xFF25B858),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class _SearchBalanceRow extends StatelessWidget {
+  const _SearchBalanceRow({
+    required this.name,
+    required this.amount,
+  });
+
+  final String name;
+  final String amount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          name,
+          style: const TextStyle(
+            color: Color(0xFF8D84C6),
+            fontSize: 12,
+          ),
+        ),
+        const Spacer(),
+        Text(
+          amount,
+          style: const TextStyle(
+            color: Color(0xFFAFA7DA),
+            fontSize: 12,
+          ),
+        ),
+      ],
     );
   }
 }
