@@ -64,7 +64,7 @@ jobs:
       - name: Refresh portfolio assets
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          mkdir -p screenshots docs/downloads
+          mkdir -p screenshots docs/downloads downloads
 
           cp build/visual_qa/runtime/02_3-1853.png screenshots/onboarding.png
           cp build/visual_qa/runtime/05_3-1932.png screenshots/sign_up.png
@@ -76,11 +76,15 @@ jobs:
           cp build/app/outputs/flutter-apk/app-release.apk docs/downloads/brees-demo.apk
           sha256sum docs/downloads/brees-demo.apk > docs/downloads/brees-demo.apk.sha256
 
+          cp build/app/outputs/flutter-apk/app-release.apk downloads/brees-demo.apk
+          sha256sum downloads/brees-demo.apk > downloads/brees-demo.apk.sha256
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
             screenshots \
             docs/downloads \
+            downloads \
             docs/assets/brees-logo.png \
             docs/assets/brees-wordmark.png \
             docs/assets/brees-app-icon.png \
